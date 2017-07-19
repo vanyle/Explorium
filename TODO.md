@@ -4,7 +4,7 @@
  - [ ] Other entities (friendly or not = [])
  - [ ] Mana Bar and Spells
  - [ ] Menu and Settings
- - [ ] Water and Clouds are in the background
+ - [x] Water is in the background
  - [ ] Player can attack
  - [ ] Player can die
  - [x] Player climbs when height is 1

@@ -10,7 +10,7 @@
  - [x] Player climbs when height is 1
  - [ ] Fullscreen can be toggled.
  - [ ] Add collisions between entities
- - [ ] Custom pixalated font -- 50%
+ - [ ] Custom pixelated font -- 70%
  - [ ] Textures for blocks and entities (proceduraly generated)
  - [ ] More structures (castles, villages)
  - [ ] Multiworld handeling, Several dimensions.

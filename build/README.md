@@ -14,4 +14,3 @@ Desert have style, there is a bit less water generating in deserts.
 There are trees, player can walk through them because they are actually behind the player.
 Slimes are trying to follow the player. Spawn and Despawn mechanics are supported.
 Performance improved by not drawing air
-> Quote

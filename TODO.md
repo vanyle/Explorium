@@ -1,0 +1,11 @@
+# TODO List for Explorium 2.
+ - [ ] Multiplayer
+ - [ ] GodMod = invincible + debugs (GodModOff = no debugs + not invincible)
+ - [ ] Other entities (friendly or not = [])
+ - [ ] Mana Bar and Spells
+ - [ ] Menu and Settings
+ - [ ] Water and Clouds are in the background
+ - [ ] Player can attack
+ - [ ] Player can die
+ - [ ] Fullscreen can be toggled.
+ - [ ] Add collisions between entities

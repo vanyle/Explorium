@@ -9,3 +9,7 @@
  - [ ] Player can die
  - [ ] Fullscreen can be toggled.
  - [ ] Add collisions between entities
+ - [ ] Custom pixalated font
+ - [ ] Textures for blocks and entities (proceduraly generated)
+ - [ ] More structures (castles, villages)
+ - [ ] Multiworld handeling, Several dimensions.

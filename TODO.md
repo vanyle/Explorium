@@ -7,9 +7,10 @@
  - [ ] Water and Clouds are in the background
  - [ ] Player can attack
  - [ ] Player can die
+ - [x] Player climbs when height is 1
  - [ ] Fullscreen can be toggled.
  - [ ] Add collisions between entities
- - [ ] Custom pixalated font
+ - [ ] Custom pixalated font -- 50%
  - [ ] Textures for blocks and entities (proceduraly generated)
  - [ ] More structures (castles, villages)
  - [ ] Multiworld handeling, Several dimensions.

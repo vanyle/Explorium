@@ -18,3 +18,7 @@ Desert have style, there is a bit less water generating in deserts.
 There are trees, player can walk through them because they are actually behind the player.
 Slimes are trying to follow the player. Spawn and Despawn mechanics are supported.
 Performance improved by not drawing air
+## 2.2.6
+Added custom structures (houses) and custom strucutre support.
+Added custom font for the game
+The Player can switch between An "Inside" dimension and An "Outside" Dimension by pressing A and E.

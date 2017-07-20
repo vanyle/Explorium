@@ -7,7 +7,7 @@ import java.util.Iterator;
 import com.vanyle.data.BlockData;
 import com.vanyle.data.FontData;
 import com.vanyle.life.Entity;
-import com.vanyle.main.Explorium2;
+import com.vanyle.main.Explorium;
 import com.vanyle.physics.Chunk;
 import com.vanyle.physics.Position;
 import com.vanyle.physics.World;
@@ -30,7 +30,7 @@ public class Render implements Renderer{
 	
 	static {
 		debug[0] = "Greetings young explorer !";
-		if(Explorium2.WIDE_FOV) {
+		if(Explorium.WIDE_FOV) {
 			wbcount *= 2;
 			hbcount = (int)(wbcount*((float)Window.HEIGHT/Window.WIDTH));
 		}

@@ -12,7 +12,7 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 
-import com.vanyle.main.Explorium2;
+import com.vanyle.main.Explorium;
 
 public class Window extends JFrame implements WindowListener, KeyListener, MouseListener, MouseMotionListener{
 	private static final long serialVersionUID = 1L;
@@ -23,7 +23,7 @@ public class Window extends JFrame implements WindowListener, KeyListener, Mouse
 	public static int HEIGHT = (int)(720);
 	
 	static {
-		if(!Explorium2.SMALL_WINDOW) {
+		if(!Explorium.SMALL_WINDOW) {
 			WIDTH *= 1.5;
 			HEIGHT *= 1.5;
 		}
@@ -31,7 +31,7 @@ public class Window extends JFrame implements WindowListener, KeyListener, Mouse
 	
 	public Window(Renderer r,PlayerInput pi) {
 		setTitle("Explorium2");
-		if(!Explorium2.SMALL_WINDOW) {
+		if(!Explorium.SMALL_WINDOW) {
 			setUndecorated(true);
 		}
 		setVisible(true);

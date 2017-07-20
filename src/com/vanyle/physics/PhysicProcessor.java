@@ -8,7 +8,7 @@ import com.vanyle.graphics.PlayerInputManager;
 import com.vanyle.graphics.Render;
 import com.vanyle.life.Entity;
 import com.vanyle.life.Slime;
-import com.vanyle.main.Explorium2;
+import com.vanyle.main.Explorium;
 import com.vanyle.math.VMath;
 import com.vanyle.procedural.ClassicGenerator;
 import com.vanyle.procedural.InteriorGenerator;
@@ -31,7 +31,7 @@ public class PhysicProcessor implements Runnable{
 	private static Position[] ppos = new Position[4];
 	
 	static {
-		if(Explorium2.GOD_MOD) {
+		if(Explorium.GOD_MOD) {
 			MoveStrengh = 0.3;
 			JumpStrengh = 0.3;
 		}
@@ -87,7 +87,7 @@ public class PhysicProcessor implements Runnable{
 			// Handel Player moves
 			
 			if(playerinput.keymap[KeyEvent.VK_Z])
-				if(eCollide(World.player,0,0.1) || Explorium2.GOD_MOD)
+				if(eCollide(World.player,0,0.1) || Explorium.GOD_MOD)
 					World.player.speedy -= JumpStrengh;
 			if(playerinput.keymap[KeyEvent.VK_S])
 				World.player.speedy += MoveStrengh;
@@ -210,7 +210,7 @@ public class PhysicProcessor implements Runnable{
 				}
 			}
 			
-			if(w.entitylist.size() < 4 && Explorium2.MOBS) { // spawn a slime
+			if(w.entitylist.size() < 4 && Explorium.MOBS) { // spawn a slime
 				Slime s = new Slime();
 				s.p = World.player.p.clone();
 				s.p.x += (Math.random()-0.5) * 80;

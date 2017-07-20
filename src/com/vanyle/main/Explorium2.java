@@ -9,10 +9,10 @@ import com.vanyle.procedural.ClassicGenerator;
 
 public class Explorium2 {
 
-	public static final boolean SMALL_WINDOW = true;
+	public static final boolean SMALL_WINDOW = false;
 	public static final boolean GOD_MOD = false;
-	public static final boolean MOBS = false;
-	public static final boolean WIDE_FOV = true;
+	public static final boolean MOBS = true;
+	public static final boolean WIDE_FOV = false;
 	
 	public static void main(String[] args) throws InterruptedException {
 		

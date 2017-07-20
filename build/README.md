@@ -21,4 +21,5 @@ Performance improved by not drawing air
 ## 2.2.6
 Added custom structures (houses) and custom strucutre support.
 Added custom font for the game
+Added procedural music support
 The Player can switch between An "Inside" dimension and An "Outside" Dimension by pressing A and E.

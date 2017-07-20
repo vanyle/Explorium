@@ -56,8 +56,8 @@ public class PhysicProcessor implements Runnable{
 	}
 	public boolean eCollide(Entity e,double driftx,double drifty) {
 		Position p;
-		for(double i = 0;i < e.w+1;i = i + 0.2) {
-			for(double j = 0;j < e.h+1;j = j + 0.2) {
+		for(double i = 0;i < e.w+1;i = i + 1) {
+			for(double j = 0;j < e.h+1;j = j + 1) {
 				p = new Position(i+driftx, j+drifty, 0, 0);
 				if(i > e.w-1) {
 					p.x = e.w + driftx;

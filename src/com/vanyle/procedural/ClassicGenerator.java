@@ -19,7 +19,7 @@ public class ClassicGenerator extends Generator{
 	private static final double cavefreq = 100;
 	private static final double caveslopeL = 0.1;
 	private static final double caveslopeV = -2.5;
-	private static final double caveslopeB = 1; // to go back up
+	private static final double caveslopeB = -0.5; // to go back up
 	private static final double cavesize = 16;
 	
 	private static final double structureFrequency = 40;
@@ -161,20 +161,20 @@ public class ClassicGenerator extends Generator{
 	}
 	public boolean isACave(double x,double y) {
 		return Math.abs( VMath.mod((y - x*caveslopeL
-				+ VMath.noise(x/250f, y/250f, seed)*trend
-				+ VMath.noise(x/20f, y/40f, seed)*vari
-				+ VMath.noise(x/5f, y/5f, seed)*rug 
+				+ VMath.noise(x/250f, y/250f, seed*2+0.1f)*trend
+				+ VMath.noise(x/20f, y/40f, seed*3-0.1f)*vari
+				+ VMath.noise(x/5f, y/5f, seed*7+0.2f)*rug 
 					),cavefreq) ) < cavesize ||
 		 Math.abs( VMath.mod((y - x*caveslopeV
-				+ VMath.noise(x/250f, y/250f, seed+1)*trend
-				+ VMath.noise(x/20f, y/40f, seed+1)*vari
+				+ VMath.noise(x/250f, y/250f, seed*5+1)*trend
+				+ VMath.noise(x/20f, y/40f, seed*9+1)*vari
 				+ VMath.noise(x/5f, y/5f, seed+1)*rug 
 					),cavefreq * 6) ) < cavesize ||
 		 Math.abs( VMath.mod((y - x*caveslopeB
-					+ VMath.noise(x/250f, y/250f, seed+1)*trend
-					+ VMath.noise(x/20f, y/40f, seed+1)*vari
-					+ VMath.noise(x/5f, y/5f, seed+1)*rug 
-						),cavefreq * 20) ) < cavesize; // really rare
+					+ VMath.noise(x/250f, y/250f, seed*4.2+1)*trend
+					+ VMath.noise(x/20f, y/40f, seed*5.6+1)*vari/2
+					+ VMath.noise(x/5f, y/5f, seed*8.9+1)*rug 
+						),cavefreq*10) ) < cavesize; // really rare
 	}	
 	public void skyGen(Chunk c,Position p,int i,int j) {
 		double d = VMath.noise( (p.cx*CSIZE+i)/40f, (p.cy*CSIZE+j)/40f, seed);

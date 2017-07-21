@@ -10,8 +10,6 @@ import com.vanyle.life.Entity;
 import com.vanyle.life.Slime;
 import com.vanyle.main.Explorium;
 import com.vanyle.math.VMath;
-import com.vanyle.procedural.ClassicGenerator;
-import com.vanyle.procedural.InteriorGenerator;
 
 public class PhysicProcessor implements Runnable{
 	
@@ -28,7 +26,10 @@ public class PhysicProcessor implements Runnable{
 	private static double MoveStrengh = 0.1;
 	private static double JumpStrengh = 3;
 	
-	private static Position[] ppos = new Position[4];
+	public static final int NO_COLLIDE = 0;
+	public static final int REGULAR_COLLIDE = 1;
+	public static final int LADDER_COLLIDE = 2;
+	public static final int WATER_COLLIDE = 3;
 	
 	static {
 		if(Explorium.GOD_MOD) {
@@ -54,7 +55,7 @@ public class PhysicProcessor implements Runnable{
 
 		      return false;
 	}
-	public boolean eCollide(Entity e,double driftx,double drifty) {
+	public boolean eCollidesWith(Entity e,double driftx,double drifty,int blockdata) {
 		Position p;
 		for(double i = 0;i < e.w+1;i = i + 1) {
 			for(double j = 0;j < e.h+1;j = j + 1) {
@@ -68,13 +69,48 @@ public class PhysicProcessor implements Runnable{
 					p.overflow();
 				}
 				p.add(e.p.clone());
-				if(w.getData(p.clone()) != BlockData.ID_AIR && w.getData(p.clone()) != BlockData.ID_WATER) { 
-					// dont collide with fluids, cloud are not fluids
+				if(w.getData(p.clone()) == blockdata)
 					return true;
-				}
+				if(w.getBackgroundData(p) == blockdata)
+					return true;
 			}
 		}
 		return false;
+	}
+	public int eCollide(Entity e,double driftx,double drifty) {
+		Position p;
+		boolean iswater = false;
+		boolean isladder = false;
+		int testid;
+		
+		for(double i = 0;i < e.w+1;i = i + 1) {
+			for(double j = 0;j < e.h+1;j = j + 1) {
+				p = new Position(i+driftx, j+drifty, 0, 0);
+				if(i > e.w-1) {
+					p.x = e.w + driftx;
+					p.overflow();
+				}
+				if(j > e.h-1) {
+					p.y = e.h + drifty;
+					p.overflow();
+				}
+				p.add(e.p.clone());
+				testid = w.getData(p.clone());
+				if(testid != BlockData.ID_AIR && testid != BlockData.ID_WATER && testid != BlockData.ID_LADDER) { 
+					// dont collide with fluids, cloud are not fluids
+					return REGULAR_COLLIDE;
+				}
+				if(testid == BlockData.ID_LADDER)
+					isladder = true;
+				if(testid == BlockData.ID_WATER)
+					iswater = true;
+			}
+		}
+		if(iswater)
+			return WATER_COLLIDE;
+		if(isladder)
+			return LADDER_COLLIDE;
+		return NO_COLLIDE;
 	}
 	@Override
 	public void run() {
@@ -86,47 +122,28 @@ public class PhysicProcessor implements Runnable{
 			
 			// Handel Player moves
 			
-			if(playerinput.keymap[KeyEvent.VK_Z])
-				if(eCollide(World.player,0,0.1) || Explorium.GOD_MOD)
-					World.player.speedy -= JumpStrengh;
+			if(playerinput.keymap[KeyEvent.VK_Z]) {
+				int ccollide = eCollide(w.player,0,0.1);
+				int ccollide2 = eCollide(w.player,0,0);
+				if(ccollide == REGULAR_COLLIDE || ccollide == WATER_COLLIDE || Explorium.GOD_MOD) // can only jump in air
+					w.player.speedy -= JumpStrengh;
+				else if(ccollide2 == LADDER_COLLIDE)
+					w.player.speedy -= MoveStrengh;
+			}
 			if(playerinput.keymap[KeyEvent.VK_S])
-				World.player.speedy += MoveStrengh;
+				w.player.speedy += MoveStrengh;
 			if(playerinput.keymap[KeyEvent.VK_Q])
-				World.player.speedx -= MoveStrengh;
+				w.player.speedx -= MoveStrengh;
 			if(playerinput.keymap[KeyEvent.VK_D])
-				World.player.speedx += MoveStrengh;
-			if(playerinput.keymap[KeyEvent.VK_E]) { // tries to enter a home
-				if(w.worldStat != World.INSIDE_WORLD) {
-					
-					ppos[w.worldStat] = World.player.p.clone();
-					w.worldStat = World.INSIDE_WORLD;
-					
-					w.setGenerator(new InteriorGenerator(0l));
-					World.player.p = new Position(CSIZE+5,CSIZE+5,0,0);
-					r.campos = World.player.p.clone();
-					r.campos.add(new Position(-CSIZE/2,-CSIZE/4,0,0));
-					w.loadAllChunk(World.player.p);
-					w.regenerate();
-				}
-			}
+				w.player.speedx += MoveStrengh;
+			if(playerinput.keymap[KeyEvent.VK_E]) // tries to enter a home
+				if(eCollidesWith(w.player,0,0,BlockData.ID_DOOR))
+					w.loadInsideWorld();
+			if(playerinput.keymap[KeyEvent.VK_A]) // Back to overworld
+				if(eCollidesWith(w.player,0,0,BlockData.ID_DOOR))
+					w.loadRegularWorld();
 			
-			if(playerinput.keymap[KeyEvent.VK_A]) { // Back to overworld
-				if(w.worldStat != World.REGULAR_WORLD) {
-					ppos[w.worldStat] = World.player.p.clone();
-					
-					w.worldStat = World.REGULAR_WORLD;
-					w.setGenerator(new ClassicGenerator(63l));
-					
-					World.player.p = ppos[World.REGULAR_WORLD].clone(); // load regular world position
-					
-					r.campos = World.player.p.clone();
-					r.campos.add(new Position(-CSIZE/2,-CSIZE/4,0,0));
-					w.loadAllChunk(new Position(0,0,0,2));
-					w.regenerate();
-				}
-			}
-			
-			r.campos.converge(World.player.p,0.05,CSIZE/2,CSIZE/4);
+			w.campos.converge(w.player.p,0.05,CSIZE/2,CSIZE/4);
 			
 			// Handel Block Physic
 			for(k = 0;k < World.WORLD_DATA_SIZE;k++) {
@@ -170,32 +187,53 @@ public class PhysicProcessor implements Runnable{
 				entity.ai(w,this);
 				
 				// 1. Compute gravity.
-				entity.speedx += gravityX /(frametime*frametime);
-				entity.speedy += gravityY /(frametime*frametime);
+				int ccollide = eCollide(entity,0,0);
+				switch(ccollide) {
+					case NO_COLLIDE: // same as regular 
+					case REGULAR_COLLIDE: // apply regular gravity
+						entity.speedx += gravityX /(frametime*frametime);
+						entity.speedy += gravityY /(frametime*frametime);
+						break;
+					case WATER_COLLIDE:
+						entity.speedy += gravityY /(frametime*frametime) * .08; // slow sinking
+						entity.speedx += gravityX /(frametime*frametime) * .08;
+						entity.speedx *= friction*0.9;
+						entity.speedy *= friction*0.9;
+						break;
+					case LADDER_COLLIDE:
+						// no gravity in ladders
+						break;
+				}
 				
 				entity.speedx *= friction;
 				entity.speedy *= friction;
 				
 				// 2. Apply speed
 				
-				if(!eCollide(entity,0,0)) {
+				if(ccollide == NO_COLLIDE || ccollide == WATER_COLLIDE || ccollide == LADDER_COLLIDE) {
 					entity.p.x += entity.speedx;
 					// if the move makes the entity collide
 					col = false;
-					while(eCollide(entity,0,0)) {
+					int colw = eCollide(entity,0,0);
+					while(colw == REGULAR_COLLIDE) {
+						Render.debug[3] = "pos "+w.player.p.toString();
 						entity.p.x -= entity.speedx/100;
-						if(eCollide(World.player,-entity.speedx,0.1) && !eCollide(World.player,0,-1))
+						if(eCollide(w.player,-entity.speedx,0.1) == REGULAR_COLLIDE && eCollide(w.player,0,-1) == NO_COLLIDE)
 							entity.p.y -= 1;
 						col = true;
+						colw = eCollide(entity,0,0);
 					}
 					if(col)
 						entity.speedx = 0;
 					col = false;
 					entity.p.y += entity.speedy;
 					// if the move makes the entity collide
-					while(eCollide(entity,0,0)) {
+					colw = eCollide(entity,0,0);
+					while(colw == REGULAR_COLLIDE) {
+						Render.debug[3] = "pos "+w.player.p.toString();
 						entity.p.y -= entity.speedy/100;
 						col = true;
+						colw = eCollide(entity,0,0);
 					}
 					if(col)
 						entity.speedy = 0;
@@ -210,22 +248,22 @@ public class PhysicProcessor implements Runnable{
 				}
 			}
 			
-			if(w.entitylist.size() < 4 && Explorium.MOBS) { // spawn a slime
+			if(w.entitylist.size() < 4 && Explorium.MOBS && w.worldStat == World.REGULAR_WORLD) { // spawn a slime
 				Slime s = new Slime();
-				s.p = World.player.p.clone();
+				s.p = w.player.p.clone();
 				s.p.x += (Math.random()-0.5) * 80;
 				s.p.y += (Math.random()-0.5) * 80;
 				s.p.overflow();
 
-				if(!eCollide(s,0,0) && s.p.dist(World.player.p) > 30*30) { // spawn outside of fov
+				if(eCollide(s,0,0) != NO_COLLIDE && s.p.dist(w.player.p) > 30*30) { // spawn outside of fov
 					w.entitylist.add(s);
 				}
 			}
 			
 			// Debug
 			
-			Render.debug[2] = "vel ("+VMath.format(World.player.speedx,3)+";"+VMath.format(World.player.speedy,3)+")";
-			Render.debug[3] = "pos "+World.player.p.toString();
+			Render.debug[2] = "vel ("+VMath.format(w.player.speedx,3)+";"+VMath.format(w.player.speedy,3)+")";
+			Render.debug[3] = "pos "+w.player.p.toString();
 			Render.debug[4] = "e "+w.entitylist.size();
 			
 			try {

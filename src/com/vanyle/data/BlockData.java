@@ -20,9 +20,10 @@ public class BlockData {
 	public static final int ID_DIRT = 7;
 	public static final int ID_TIMEGOO = 8;
 	public static final int ID_TRUNK = 9;
-	public static final int ID_LEAF = 10;
-	public static final int ID_EMPTYNESS = 11;
-	public static final int ID_PLATFORM = 12; 
+	public static final int ID_LEAF = 10; // a
+	public static final int ID_EMPTYNESS = 11; // b
+	public static final int ID_LADDER = 12;  // c
+	public static final int ID_DOOR = 13; // d
 	
 	private final static Color[] map = {
 			new Color(0,0,0,0), // air
@@ -37,7 +38,8 @@ public class BlockData {
 			new Color(164, 72, 1), // trunk
 			new Color(58, 95, 11), // leaf
 			new Color(0,0,0), // nothing (vantablack)
-			new Color(164,72,1) // wooden platform
+			new Color(133,94,66), // ladder
+			new Color(133,94,66) // door
 	};
 	
 	public static Color toColor(int id) {

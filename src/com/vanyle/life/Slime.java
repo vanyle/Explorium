@@ -16,15 +16,15 @@ public class Slime extends Entity{
 	
 	@Override
 	public void ai(World w,PhysicProcessor pp) {
-		if(pp.eCollide(this,0,0.1))
+		if(pp.eCollide(this,0,0.1) == PhysicProcessor.REGULAR_COLLIDE)
 			speedy -= 4;
 		
-		if(p.x() > World.player.p.x()) { // chase the player #stalker
+		if(p.x() > w.player.p.x()) { // chase the player #stalker
 			speedx -= 0.05;
 		}else {
 			speedx += 0.05;
 		}
-		if(p.dist(World.player.p) > Chunk.CSIZE*Chunk.CSIZE*4) { // despawn
+		if(p.dist(w.player.p) > Chunk.CSIZE*Chunk.CSIZE*4 || w.worldStat != World.REGULAR_WORLD) { // despawn
 			alive = false;
 		}
 	}

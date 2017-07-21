@@ -16,8 +16,6 @@ public class Render implements Renderer{
 
 	private World w;
 	
-	public Position campos = new Position(0,0,0,1);
-	
 	public static int wbcount = Chunk.CSIZE; // 1 chunk displayable in the screen, increase for debug
 	public static int hbcount = (int)(wbcount*((float)Window.HEIGHT/Window.WIDTH)); // about wbcount/1.7778
 	
@@ -47,7 +45,7 @@ public class Render implements Renderer{
 		int i,j,data;
 		double exx,exy;
 		Position p;
-		Position cpos = campos.clone(); // copy campos for rendering;
+		Position cpos = w.campos.clone(); // copy campos for rendering;
 		w.loadChunk(cpos);
 		
 		for(i = 0;i < wbcount+1;i++) {

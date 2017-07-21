@@ -14,10 +14,12 @@ public class Explorium {
 	public static final boolean MOBS = true;
 	public static final boolean WIDE_FOV = false;
 	
+	public static final long GLOBAL_SEED = 10l;
+	
 	public static void main(String[] args) throws InterruptedException {
 		
 		PlayerInputManager pim = new PlayerInputManager();
-		World world = new World(new ClassicGenerator(63l));
+		World world = new World(new ClassicGenerator(GLOBAL_SEED));
 		world.load();
 		
 		Render r = new Render(world);

@@ -8,27 +8,31 @@ import com.vanyle.physics.Position;
 
 public class InteriorGenerator extends Generator{
 	
-	private int ZONE_WIDTH = 40;
-	private int ZONE_HEIGHT = 40;
+	private int ZONE_WIDTH = 60;
+	private int ZONE_HEIGHT = 30;
 	private int WALL_MATERIAL = BlockData.ID_TRUNK;
+	
+	private double FLOOR_SIZE = 15;
+	private double ROOM_SIZE = 20;
 	
 	private int[] floorData;
 	private int[][] wallData; // floor dependent.
 	private int[] floorHoles;
 	
 	public InteriorGenerator(long seed) {
-		super(seed+1);
-		Random r = new Random(seed+1);
-		int floorcount = (int)Math.floor((r.nextDouble()/2 + 0.75)*ZONE_HEIGHT/8); // 1 floor ~ 10 blocks
+		super(seed);
+		Random r = new Random(seed);
+		
+		int floorcount = (int)Math.floor((r.nextDouble()/2 + 0.75)*ZONE_HEIGHT/FLOOR_SIZE); // 1 floor ~ 10 blocks
 		int hleft = ZONE_HEIGHT;
 		
 		floorData = new int[floorcount];
-		floorHoles = new int[floorcount];
+		floorHoles = new int[floorcount-1];
 		wallData = new int[floorcount][];
 		
 		for(int i = 0;i < floorcount;i++) { // Split building into floors
 			if(i != floorcount-1)
-				floorData[i] = (int)((hleft / (floorcount-(double)i)) + r.nextDouble()*3); 
+				floorData[i] = (int)((hleft / (floorcount-(double)i)) + r.nextDouble()*4); 
 			else
 				floorData[i] = hleft;
 			hleft -= floorData[i];
@@ -39,7 +43,7 @@ public class InteriorGenerator extends Generator{
 		}
 		
 		for(int i = 0;i < floorcount;i++) { // Split floors into rooms
-			int roomcount = (int)Math.floor((r.nextDouble()/2 + 0.75)*ZONE_WIDTH/10); // 1 room ~ 10 blocks
+			int roomcount = (int)Math.floor((r.nextDouble()/2 + 0.75)*ZONE_WIDTH/ROOM_SIZE); // 1 room ~ 10 blocks
 			int wleft = ZONE_WIDTH;
 			wallData[i] = new int[roomcount];
 			
@@ -58,12 +62,12 @@ public class InteriorGenerator extends Generator{
 		
 		// choose floor holes
 		boolean ok = false;
-		for(int i = 0;i < floorcount;i++) {
+		for(int i = 0;i < floorcount-1;i++) {
 			while(!ok) {
 				floorHoles[i] = (int)(r.nextDouble()*(ZONE_WIDTH-1))+1;
 				
 				for(int j = 0;j < wallData[i].length;j++) {
-					if(wallData[i][j] == floorHoles[i] || wallData[i][j] == floorHoles[i]+1) {
+					if(wallData[i][j] == floorHoles[i] || wallData[i][j] == floorHoles[i]+1 || wallData[i][j] == floorHoles[i]+2) {
 						break;
 					}
 					if(j == wallData[i].length-1)
@@ -98,14 +102,28 @@ public class InteriorGenerator extends Generator{
 					if(x == ZONE_WIDTH || y == ZONE_HEIGHT || x == 0 || y == 0){
 						c.data[i][j][0] = WALL_MATERIAL;
 					}
+					// generate a door
+					if(y < floorData[0] && y > floorData[0]-6 && (x == 6 || x == 7 || x == 8)) {
+						c.data[i][j][1] = BlockData.ID_DOOR;
+					}
 					for(int k = 0;k < floorData.length;k++) {
-						if(y == floorData[k] && x != floorHoles[k] && x != floorHoles[k]+1 && x != floorHoles[k]+2) {
+						if(y == floorData[k] && (k == floorData.length-1 || x != floorHoles[k] && x != floorHoles[k]+1 && x != floorHoles[k]+2)) {
 							c.data[i][j][0] = WALL_MATERIAL;
 							continue;
+						}else if(y == floorData[k] && (x == floorHoles[k] || x == floorHoles[k]+1 || x == floorHoles[k]+2)) {
+							c.data[i][j][0] = BlockData.ID_LADDER;
 						}
-						if(k != floorData.length-1 && y > floorData[k] && y < floorData[k+1]) { // y is at the correct floor
+						if(y > floorData[k] && y < floorData[k+1]) {
+							if(k < floorHoles.length && (x == floorHoles[k] || x == floorHoles[k]+1 || x == floorHoles[k]+2)) {
+								c.data[i][j][0] = BlockData.ID_LADDER;
+							}
+						}
+					}
+					for(int k = 0;k < floorData.length;k++) {
+						int down = k == 0 ? 0 : floorData[k-1];
+						if(y > down && y < floorData[k]) { // y is at the correct floor
 							for(int l = 0;l < wallData[k].length;l++) {
-								if(x == wallData[k][l] && y < floorData[k+1]-4) { // generate walls
+								if(x == wallData[k][l] && y < floorData[k]-4) { // generate walls
 									c.data[i][j][0] = WALL_MATERIAL;
 								}
 							}

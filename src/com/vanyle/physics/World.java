@@ -5,13 +5,18 @@ import java.util.List;
 
 import com.vanyle.life.Entity;
 import com.vanyle.life.Player;
+import com.vanyle.main.Explorium;
+import com.vanyle.procedural.ClassicGenerator;
 import com.vanyle.procedural.Generator;
+import com.vanyle.procedural.InteriorGenerator;
 
 public class World {
 	
 	public static final int REGULAR_WORLD = 0;
 	public static final int INSIDE_WORLD = 1;
 	public static final int UPSIDEDOWN_WORLD = 2;
+	
+	private static Position[] ppos = new Position[4]; // Store Player Position across worlds
 	
 	public int worldStat = 0;
 	
@@ -20,7 +25,8 @@ public class World {
 	Chunk[][] tempwdata = new Chunk[WORLD_DATA_SIZE][WORLD_DATA_SIZE];
 	private Generator g;
 	
-	public static Player player = new Player();
+	public Player player = new Player();
+	public Position campos = new Position(0,0,0,1);
 	
 	public List<Entity> entitylist = new LinkedList<>();
 	
@@ -37,6 +43,7 @@ public class World {
 	public void load() { // when ready to render
 		player.p = new Position(0,0,0,1); // reset player pos on world creation
 		entitylist.add(player);
+		// loadInsideWorld(); // line for debugging specific worlds gens
 	}
 	public void loadChunk(Position p) { // try to generate as few chunks as posible
 		if(p.cx == currChunk.cx && p.cy == currChunk.cy) {
@@ -149,6 +156,40 @@ public class World {
 		wdata[p.getCX()][p.getCY()].data[p.getX()][p.getY()][1] = id;
 	}
 	
+	public void loadInsideWorld() { // change generation, regen chunks and change player position
+		if(worldStat != INSIDE_WORLD) {
+			ppos[worldStat] = player.p.clone(); // save current position
+			
+			worldStat = World.INSIDE_WORLD;
+			setGenerator(new InteriorGenerator(0l));
+			
+			player.p = new Position(Chunk.CSIZE+5,Chunk.CSIZE+5,0,0);
+			campos = player.p.clone(); // replace camera correctly
+			campos.add(new Position(-Chunk.CSIZE/2,-Chunk.CSIZE/4,0,0));
+			
+			if(player.p.cx != currChunk.cx || player.p.cy != currChunk.cy) { // if an update is required
+				currChunk.cx = player.p.cx;
+				currChunk.cy = player.p.cy;
+			}
+			regenerate();
+		}
+	}
+	public void loadRegularWorld() {
+		if(worldStat != REGULAR_WORLD) {
+			ppos[worldStat] = player.p.clone(); // save current position
+			
+			worldStat = World.REGULAR_WORLD;
+			setGenerator(new ClassicGenerator(Explorium.GLOBAL_SEED));
+			
+			player.p = ppos[World.REGULAR_WORLD].clone(); // load regular world position
+			
+			campos = player.p.clone(); // replace camera correctly
+			campos.add(new Position(-Chunk.CSIZE/2,-Chunk.CSIZE/4,0,0));
+			
+			loadAllChunk(new Position(0,0,0,2));
+			regenerate();
+		}
+	}
 	
 	public void setGenerator(Generator g) {
 		this.g = g;

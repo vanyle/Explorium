@@ -10,7 +10,11 @@ public abstract class Generator {
 	protected static final double CSIZE = Chunk.CSIZE;
 	
 	public Generator(long seed) {
-		this.seed = new Random(seed).nextDouble();
+		Random rnd = new Random(seed);
+		int c = (int) (rnd.nextDouble()*30);
+		for(int i = 0;i < c;i++)
+			rnd.nextDouble();
+		this.seed = rnd.nextDouble();
 	}
 	public double seed() {
 		return seed;

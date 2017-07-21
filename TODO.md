@@ -13,4 +13,4 @@
  - [ ] Custom pixelated font -- 70%
  - [ ] Textures for blocks and entities (proceduraly generated)
  - [ ] More structures (castles, villages)
- - [ ] Multiworld handeling, Several dimensions.
+ - [x] Multiworld handeling, Several dimensions.

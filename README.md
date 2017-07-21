@@ -1,5 +1,5 @@
 # Explorium 2
-Explorium 2d RPG where everything is proceduraly generated.
+Explorium is a 2d RPG where everything is proceduraly generated.
 The idea is to create a game with no assets nor ressources files.
 
 Explorium 2 is coded is Java with the native library.

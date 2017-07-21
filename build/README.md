@@ -31,3 +31,4 @@ Improved water : Player can swim
 Slimes cannot spawn in houses
 Added basic inventory management support and RPG stats
 Added a menu screen (Only Play button works)
+Improved procedural music support

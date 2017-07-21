@@ -23,3 +23,11 @@ Added custom structures (houses) and custom strucutre support.
 Added custom font for the game
 Added procedural music support
 The Player can switch between An "Inside" dimension and An "Outside" Dimension by pressing A and E.
+# 2.2.7
+Improved the content of the house
+Added a new block : The ladder
+Full custom font support for all common used characters
+Improved water : Player can swim
+Slimes cannot spawn in houses
+Added basic inventory management support and RPG stats
+Added a menu screen (Only Play button works)

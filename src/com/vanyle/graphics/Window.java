@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import com.vanyle.main.Explorium;
 
 public class Window extends JFrame implements WindowListener, KeyListener, MouseListener, MouseMotionListener{
+	
 	private static final long serialVersionUID = 1L;
 	private Panel p;
 	private PlayerInput pi;
@@ -68,6 +69,10 @@ public class Window extends JFrame implements WindowListener, KeyListener, Mouse
 	public void size(int x,int y){
 		setSize(x, y);
 	}
+	public void setRenderer(Renderer r) {
+		p.setRenderer(r);
+	}
+	
 	@Override
 	public void windowActivated(WindowEvent e) {}
 	@Override

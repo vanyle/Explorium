@@ -194,4 +194,7 @@ public class World {
 	public void setGenerator(Generator g) {
 		this.g = g;
 	}
+	public Generator getGenerator() {
+		return g;
+	}
 }

@@ -27,7 +27,6 @@ public class Render implements Renderer{
 	public final int bsize = Window.WIDTH / wbcount;
 	
 	static {
-		debug[0] = "Greetings young explorer !";
 		if(Explorium.WIDE_FOV) {
 			wbcount *= 2;
 			hbcount = (int)(wbcount*((float)Window.HEIGHT/Window.WIDTH));

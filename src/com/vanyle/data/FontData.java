@@ -25,12 +25,12 @@ public class FontData {
 			{0,1,1,1,0}
 	};
 	public static int[][] CHAR_MAJ_B = { // 5x6
-			{0,0,0,1,1},
-			{0,1,1,0,1},
-			{0,0,0,1,1},
-			{0,1,1,0,1},
-			{0,1,1,0,1},
-			{0,0,0,1,1}
+			{0,0,0,1},
+			{0,1,1,0},
+			{0,0,0,1},
+			{0,1,1,0},
+			{0,1,1,0},
+			{0,0,0,1}
 	};
 	public static int[][] CHAR_MAJ_C = { // 5x6
 			{1,0,0,0,1},
@@ -41,36 +41,36 @@ public class FontData {
 			{1,0,0,0,1}
 	};
 	public static int[][] CHAR_MAJ_D = { // 5x6
-			{0,0,0,1,1},
-			{0,1,1,0,1},
-			{0,1,1,0,1},
-			{0,1,1,0,1},
-			{0,1,1,0,1},
-			{0,0,0,1,1}
+			{0,0,0,1},
+			{0,1,1,0},
+			{0,1,1,0},
+			{0,1,1,0},
+			{0,1,1,0},
+			{0,0,0,1}
 	};
 	public static int[][] CHAR_MAJ_E = { // 5x6
-			{0,0,0,0,1},
-			{0,1,1,1,1},
-			{0,0,0,0,1},
-			{0,1,1,1,1},
-			{0,1,1,1,1},
-			{0,0,0,0,1}
+			{0,0,0,0},
+			{0,1,1,1},
+			{0,0,0,0},
+			{0,1,1,1},
+			{0,1,1,1},
+			{0,0,0,0}
 	};
 	public static int[][] CHAR_MAJ_F = { // 5x6
-			{0,0,0,0,1},
-			{0,1,1,1,1},
-			{0,0,0,0,1},
-			{0,1,1,1,1},
-			{0,1,1,1,1},
-			{0,1,1,1,1}
+			{0,0,0,0},
+			{0,1,1,1},
+			{0,0,0,0},
+			{0,1,1,1},
+			{0,1,1,1},
+			{0,1,1,1}
 	};
 	public static int[][] CHAR_MAJ_G = {
-			{1,0,0,0,1},
-			{0,1,1,1,1},
-			{0,1,0,0,1},
-			{0,1,1,0,1},
-			{0,1,1,0,1},
-			{1,0,0,1,1}
+			{1,0,0,0},
+			{0,1,1,1},
+			{0,1,0,0},
+			{0,1,1,0},
+			{0,1,1,0},
+			{1,0,0,1}
 	};
 	public static int[][] CHAR_MAJ_H = {
 			{0,1,1,1,0},
@@ -81,12 +81,12 @@ public class FontData {
 			{0,1,1,1,0}	
 	};
 	public static int[][] CHAR_MAJ_I = {
-			{1,0,0,0,1},
-			{1,1,0,1,1},
-			{1,1,0,1,1},
-			{1,1,0,1,1},
-			{1,1,0,1,1},
-			{1,0,0,0,1}	
+			{0,0,0},
+			{1,0,1},
+			{1,0,1},
+			{1,0,1},
+			{1,0,1},
+			{0,0,0}	
 	};
 	public static int[][] CHAR_MAJ_J = {
 			{1,0,0,0,0},
@@ -97,20 +97,20 @@ public class FontData {
 			{1,0,0,1,1}	
 	};
 	public static int[][] CHAR_MAJ_K = {
-			{0,1,1,0,1},
-			{0,1,0,1,1},
-			{0,0,1,1,1},
-			{0,1,0,1,1},
-			{0,1,1,0,1},
-			{0,1,1,0,1}	
+			{0,1,1,0},
+			{0,1,0,1},
+			{0,0,1,1},
+			{0,1,0,1},
+			{0,1,1,0},
+			{0,1,1,0}	
 	};
 	public static int[][] CHAR_MAJ_L = {
-			{0,1,1,1,1},
-			{0,1,1,1,1},
-			{0,1,1,1,1},
-			{0,1,1,1,1},
-			{0,1,1,1,1},
-			{0,0,0,0,1}	
+			{0,1,1,1},
+			{0,1,1,1},
+			{0,1,1,1},
+			{0,1,1,1},
+			{0,1,1,1},
+			{0,0,0,0}	
 	};
 	public static int[][] CHAR_MAJ_M = {
 			{0,1,1,1,0},
@@ -121,12 +121,12 @@ public class FontData {
 			{0,1,1,1,0}	
 	};
 	public static int[][] CHAR_MAJ_N = {
-			{0,1,1,0,1},
-			{0,0,1,0,1},
-			{0,1,0,0,1},
-			{0,1,1,0,1},
-			{0,1,1,0,1},
-			{0,1,1,0,1}	
+			{0,1,1,0},
+			{0,0,1,0},
+			{0,1,0,0},
+			{0,1,1,0},
+			{0,1,1,0},
+			{0,1,1,0}	
 	};
 	public static int[][] CHAR_MAJ_O = {
 			{1,0,0,0,1},
@@ -137,12 +137,12 @@ public class FontData {
 			{1,0,0,0,1}	
 	};
 	public static int[][] CHAR_MAJ_P = {
-			{0,0,0,0,1},
-			{0,1,1,0,1},
-			{0,0,0,0,1},
-			{0,1,1,1,1},
-			{0,1,1,1,1},
-			{0,1,1,1,1}	
+			{0,0,0,0},
+			{0,1,1,0},
+			{0,0,0,0},
+			{0,1,1,1},
+			{0,1,1,1},
+			{0,1,1,1}	
 	};
 	public static int[][] CHAR_MAJ_Q = {
 			{1,0,0,0,1},
@@ -153,20 +153,20 @@ public class FontData {
 			{1,0,0,1,0}	
 	};
 	public static int[][] CHAR_MAJ_R = {
-			{0,0,0,1,1},
-			{0,1,1,0,1},
-			{0,0,0,1,1},
-			{0,1,0,1,1},
-			{0,1,1,0,1},
-			{0,1,1,0,1}	
+			{0,0,0,1},
+			{0,1,1,0},
+			{0,0,0,1},
+			{0,1,0,1},
+			{0,1,1,0},
+			{0,1,1,0}	
 	};
 	public static int[][] CHAR_MAJ_S = {
-			{0,0,0,0,1},
-			{0,1,1,1,1},
-			{0,0,0,0,1},
-			{1,1,1,0,1},
-			{1,1,1,0,1},
-			{0,0,0,0,1}	
+			{0,0,0,0},
+			{0,1,1,1},
+			{0,0,0,0},
+			{1,1,1,0},
+			{1,1,1,0},
+			{0,0,0,0}	
 	};
 	public static int[][] CHAR_MAJ_T = {
 			{0,0,0,0,0},
@@ -224,7 +224,214 @@ public class FontData {
 			{1,0,1,1,1},
 			{0,0,0,0,0}	
 	};
-	
+	public static int[][] CHAR_MIN_A = {
+			{1,1,1,1},
+			{0,0,0,1},
+			{1,1,1,0},
+			{0,0,0,0},
+			{0,1,1,0},
+			{0,0,0,0}	
+	};
+	public static int[][] CHAR_MIN_B = {
+			{0,1,1,1},
+			{0,1,1,1},
+			{0,0,0,0},
+			{0,1,1,0},
+			{0,1,1,0},
+			{0,0,0,0}	
+	};
+	public static int[][] CHAR_MIN_C = {
+			{1,1,1,1},
+			{1,0,0,0},
+			{0,1,1,1},
+			{0,1,1,1},
+			{0,1,1,1},
+			{1,0,0,0}	
+	};
+	public static int[][] CHAR_MIN_D = {
+			{1,1,1,0},
+			{1,1,1,0},
+			{0,0,0,0},
+			{0,1,1,0},
+			{0,1,1,0},
+			{0,0,0,0}	
+	};
+	public static int[][] CHAR_MIN_E = {
+			{1,1,1,1},
+			{0,0,0,0},
+			{0,1,1,0},
+			{0,0,0,0},
+			{0,1,1,1},
+			{0,0,0,0}	
+	};
+	public static int[][] CHAR_MIN_F = {
+			{1,1,1},
+			{0,0,0},
+			{0,1,1},
+			{0,0,1},
+			{0,1,1},
+			{0,1,1}	
+	};
+	public static int[][] CHAR_MIN_G = {
+			{1,1,1,1},
+			{0,0,0,0},
+			{0,1,1,1},
+			{0,1,0,0},
+			{0,1,1,0},
+			{0,0,0,0}	
+	};
+	public static int[][] CHAR_MIN_H = {
+			{1,1,1,1},
+			{0,1,1,1},
+			{0,1,1,1},
+			{0,0,0,0},
+			{0,1,1,0},
+			{0,1,1,0}	
+	};
+	public static int[][] CHAR_MIN_I = {
+			{0},
+			{1},
+			{0},
+			{0},
+			{0},
+			{0}	
+	};
+	public static int[][] CHAR_MIN_J = {
+			{1,0},
+			{1,1},
+			{1,0},
+			{1,0},
+			{1,0},
+			{0,0}	
+	};
+	public static int[][] CHAR_MIN_K = {
+			{1,1,1,1},
+			{0,1,1,1},
+			{0,1,1,1},
+			{0,1,1,0},
+			{0,0,0,1},
+			{0,1,1,0}	
+	};
+	public static int[][] CHAR_MIN_L = {
+			{0},
+			{0},
+			{0},
+			{0},
+			{0},
+			{0}	
+	};
+	public static int[][] CHAR_MIN_M = {
+			{1,1,1,1,1},
+			{1,0,1,0,1},
+			{0,1,0,1,0},
+			{0,1,0,1,0},
+			{0,1,0,1,0},
+			{0,1,0,1,0}	
+	};	
+	public static int[][] CHAR_MIN_N = {
+			{1,1,1,1},
+			{1,0,0,1},
+			{0,1,1,0},
+			{0,1,1,0},
+			{0,1,1,0},
+			{0,1,1,0}	
+	};	
+	public static int[][] CHAR_MIN_O = {
+			{1,1,1,1},
+			{1,0,0,1},
+			{0,1,1,0},
+			{0,1,1,0},
+			{0,1,1,0},
+			{1,0,0,1}	
+	};	
+	public static int[][] CHAR_MIN_P = {
+			{1,1,1,1},
+			{0,0,0,0},
+			{0,1,1,0},
+			{0,0,0,0},
+			{0,1,1,1},
+			{0,1,1,1}	
+	};	
+	public static int[][] CHAR_MIN_Q = {
+			{1,1,1,1},
+			{0,0,0,0},
+			{0,1,1,0},
+			{0,0,0,0},
+			{1,1,1,0},
+			{1,1,1,0}	
+	};
+	public static int[][] CHAR_MIN_R = {
+			{1,1,1,1},
+			{1,0,0,0},
+			{0,1,1,1},
+			{0,1,1,1},
+			{0,1,1,1},
+			{0,1,1,1}	
+	};
+	public static int[][] CHAR_MIN_S = {
+			{1,1,1},
+			{0,0,0},
+			{0,1,1},
+			{0,0,0},
+			{1,1,0},
+			{0,0,0}	
+	};
+	public static int[][] CHAR_MIN_T = {
+			{1,1,1},
+			{0,1,1},
+			{0,0,0},
+			{0,1,1},
+			{0,1,1},
+			{0,0,0}	
+	};
+	public static int[][] CHAR_MIN_U = {
+			{1,1,1,1,1},
+			{0,1,1,1,0},
+			{0,1,1,1,0},
+			{0,1,1,1,0},
+			{0,1,1,1,0},
+			{1,0,0,0,1}	
+	};
+	public static int[][] CHAR_MIN_V = {
+			{1,1,1,1,1},
+			{0,1,1,1,0},
+			{0,1,1,1,0},
+			{0,1,1,1,0},
+			{1,0,1,0,1},
+			{1,1,0,1,1}	
+	};
+	public static int[][] CHAR_MIN_W = {
+			{1,1,1,1,1},
+			{0,1,1,1,0},
+			{0,1,1,1,0},
+			{0,1,0,1,0},
+			{0,1,0,1,0},
+			{1,0,1,0,1}	
+	};
+	public static int[][] CHAR_MIN_X = {
+			{1,1,1,1,1},
+			{0,1,1,1,0},
+			{1,0,1,0,1},
+			{1,1,0,1,1},
+			{1,0,1,0,1},
+			{0,1,1,1,0}	
+	};
+	public static int[][] CHAR_MIN_Y = {
+			{1,1,1,1},
+			{0,1,1,0},
+			{0,1,1,0},
+			{0,0,0,0},
+			{1,1,1,0},
+			{0,0,0,0}	
+	};
+	public static int[][] CHAR_MIN_Z = {
+			{1,1,1,1,1},
+			{0,0,0,0,0},
+			{1,1,1,0,1},
+			{1,1,0,1,1},
+			{1,0,1,1,1},
+			{0,0,0,0,0}	
+	};
 	public static int[][] CHAR_NUM_0 = {
 			{1,0,0,1,1},
 			{0,1,1,0,1},
@@ -339,20 +546,20 @@ public class FontData {
 			{1,1,1,1,1}	
 	};
 	public static int[][] CHAR_MISC_OPEN_BR = {
-			{1,0,1,1,1},
-			{0,1,1,1,1},
-			{0,1,1,1,1},
-			{0,1,1,1,1},
-			{0,1,1,1,1},
-			{1,0,1,1,1}	
+			{1,0,1},
+			{0,1,1},
+			{0,1,1},
+			{0,1,1},
+			{0,1,1},
+			{1,0,1}	
 	};
 	public static int[][] CHAR_MISC_CLOSE_BR = {
-			{1,1,1,0,1},
-			{1,1,1,1,0},
-			{1,1,1,1,0},
-			{1,1,1,1,0},
-			{1,1,1,1,0},
-			{1,1,1,0,1}	
+			{1,0,1},
+			{1,1,0},
+			{1,1,0},
+			{1,1,0},
+			{1,1,0},
+			{1,0,1}	
 	};
 	public static int[][] CHAR_MISC_DASH = {
 			{1,1,1,1,1},
@@ -379,14 +586,21 @@ public class FontData {
 			{1,1,0,1,1}		
 	};
 	public static int[][] CHAR_MISC_EXCLAMATION_MARK = {
-			{1,1,0,1,1},
-			{1,1,0,1,1},
-			{1,1,0,1,1},
-			{1,1,0,1,1},
-			{1,1,1,1,1},
-			{1,1,0,1,1}	
+			{1,0,1},
+			{1,0,1},
+			{1,0,1},
+			{1,0,1},
+			{1,1,1},
+			{1,0,1}	
 	};
-
+	public static int length(String s,int size) {
+		int l = 0;
+		for(int i = 0;i < s.length();i++) {
+			l += size*(charToMap(s.charAt(i))[0].length + 2);
+		}
+		l -= 2*size;
+		return l;
+	}
 	public static void drawString(String s,int x,int y,Graphics g,int size) {
 		int cx = x;
 		for(int i = 0;i < s.length();i++) {
@@ -397,65 +611,117 @@ public class FontData {
 						g.fillRect(cx+(k*size), y+(j*size), size, size);
 				}
 			}
-			cx += 7*size;
+			cx += (charmap[0].length+2)*size;
 		}
 	}
 	public static int[][] charToMap(char c){
-		c = (c+"").toLowerCase().charAt(0);
+		c = (c+"").charAt(0);
 		
 		switch(c) {
-			case 'a':
+			case 'A':
 				return CHAR_MAJ_A;
-			case 'b':
+			case 'B':
 				return CHAR_MAJ_B;
-			case 'c':
+			case 'C':
 				return CHAR_MAJ_C;
-			case 'd':
+			case 'D':
 				return CHAR_MAJ_D;
-			case 'e':
+			case 'E':
 				return CHAR_MAJ_E;
-			case 'f':
+			case 'F':
 				return CHAR_MAJ_F;
-			case 'g':
+			case 'G':
 				return CHAR_MAJ_G;
-			case 'h':
+			case 'H':
 				return CHAR_MAJ_H;
-			case 'i':
+			case 'I':
 				return CHAR_MAJ_I;
-			case 'j':
+			case 'J':
 				return CHAR_MAJ_J;
-			case 'k':
+			case 'K':
 				return CHAR_MAJ_K;
-			case 'l':
+			case 'L':
 				return CHAR_MAJ_L;
-			case 'm':
+			case 'M':
 				return CHAR_MAJ_M;
-			case 'n':
+			case 'N':
 				return CHAR_MAJ_N;
-			case 'o':
+			case 'O':
 				return CHAR_MAJ_O;
-			case 'p':
+			case 'P':
 				return CHAR_MAJ_P;
-			case 'q':
+			case 'Q':
 				return CHAR_MAJ_Q;
-			case 'r':
+			case 'R':
 				return CHAR_MAJ_R;
-			case 's':
+			case 'S':
 				return CHAR_MAJ_S;
-			case 't':
+			case 'T':
 				return CHAR_MAJ_T;
-			case 'u':
+			case 'U':
 				return CHAR_MAJ_U;
-			case 'v':
+			case 'V':
 				return CHAR_MAJ_V;
-			case 'w':
+			case 'W':
 				return CHAR_MAJ_W;
-			case 'x':
+			case 'X':
 				return CHAR_MAJ_X;
-			case 'y':
+			case 'Y':
 				return CHAR_MAJ_Y;
-			case 'z':
+			case 'Z':
 				return CHAR_MAJ_Z;
+			case 'a':
+				return CHAR_MIN_A;
+			case 'b':
+				return CHAR_MIN_B;
+			case 'c':
+				return CHAR_MIN_C;
+			case 'd':
+				return CHAR_MIN_D;
+			case 'e':
+				return CHAR_MIN_E;
+			case 'f':
+				return CHAR_MIN_F;
+			case 'g':
+				return CHAR_MIN_G;
+			case 'h':
+				return CHAR_MIN_H;
+			case 'i':
+				return CHAR_MIN_I;
+			case 'j':
+				return CHAR_MIN_J;
+			case 'k':
+				return CHAR_MIN_K;
+			case 'l':
+				return CHAR_MIN_L;
+			case 'm':
+				return CHAR_MIN_M;
+			case 'n':
+				return CHAR_MIN_N;
+			case 'o':
+				return CHAR_MIN_O;
+			case 'p':
+				return CHAR_MIN_P;
+			case 'q':
+				return CHAR_MIN_Q;
+			case 'r':
+				return CHAR_MIN_R;
+			case 's':
+				return CHAR_MIN_S;
+			case 't':
+				return CHAR_MIN_T;
+			case 'u':
+				return CHAR_MIN_U;
+			case 'v':
+				return CHAR_MIN_V;
+			case 'w':
+				return CHAR_MIN_W;
+			case 'x':
+				return CHAR_MIN_X;
+			case 'y':
+				return CHAR_MIN_Y;
+			case 'z':
+				return CHAR_MIN_Z;
 			case '0':
 				return CHAR_NUM_0;
 			case '1':

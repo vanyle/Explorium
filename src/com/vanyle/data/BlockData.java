@@ -1,6 +1,8 @@
 package com.vanyle.data;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.util.Random;
 
 /**
  * 
@@ -41,6 +43,27 @@ public class BlockData {
 			new Color(133,94,66), // ladder
 			new Color(133,94,66) // door
 	};
+	private final static double[][] noisemap = {
+			{0,0,0 , 0,0,0},
+			{100,100,20 , 20,20,20}, // noiseX
+			{0,0,0 , 0,0,0},
+			{100,100,20 , 10,10,10}
+	};
+	public static final int blockType = map.length;
+	public static final int blockDiversity = 10;
+	
+	public static BufferedImage[][] texturemap = new BufferedImage[blockType][blockDiversity];
+	
+	public static BufferedImage toTexture(int id,int x,int y) {
+		// retreive Texture Array
+		BufferedImage[] biArray = texturemap[id];
+		long lx = (long)x;
+		long ly = (long)y;
+		Random r = new Random(lx+ly*(long)Math.pow(2, 32));
+		long res = r.nextInt()%blockDiversity;
+		res = res < 0 ? res+blockDiversity : res;
+		return biArray[(int)res]; 
+	}
 	
 	public static Color toColor(int id) {
 		try {
@@ -49,5 +72,13 @@ public class BlockData {
 			return Color.BLACK;
 		}
 				//return new Color(Math.min(255,Math.max(id+128,0)),0,0); // useful for debug
+	}
+	public static double[] getNoiseData(int id) {
+		try {
+			return noisemap[id];
+		}catch(ArrayIndexOutOfBoundsException e) {
+			double[] d = {0,0,0 , 0,0,0};
+			return d;
+		}
 	}
 }

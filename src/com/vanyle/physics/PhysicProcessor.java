@@ -83,14 +83,14 @@ public class PhysicProcessor implements Runnable{
 		boolean isladder = false;
 		int testid;
 		
-		for(double i = 0;i < e.w+1;i = i + 1) {
-			for(double j = 0;j < e.h+1;j = j + 1) {
+		for(double i = 0;i < Math.floor(e.w+2);i++) {
+			for(double j = 0;j < Math.floor(e.h+2);j++) {
 				p = new Position(i+driftx, j+drifty, 0, 0);
-				if(i > e.w-1) {
+				if(i > e.w) {
 					p.x = e.w + driftx;
 					p.overflow();
 				}
-				if(j > e.h-1) {
+				if(j > e.h) {
 					p.y = e.h + drifty;
 					p.overflow();
 				}

@@ -32,8 +32,8 @@ public class RenderMenu implements Renderer{
 	public final static Color skycolor = new Color(0.0195f, 0.6015625f, 0.953125f);
 	public final int bsize = Window.WIDTH / wbcount;
 	
-	public static BufferedImage buttonbg = TextureGenerator.blockIdToImage(BlockData.ID_TRUNK, 20, 10);
-	public static BufferedImage pressedbg = TextureGenerator.blockIdToImage(BlockData.ID_LADDER, 20, 10);
+	public static BufferedImage buttonbg = TextureGenerator.blockIdToImage(BlockData.ID_TRUNK, 20, 10, 0.1);
+	public static BufferedImage pressedbg = TextureGenerator.blockIdToImage(BlockData.ID_LADDER, 20, 10, 0.1);
 	
 	public static Button[] buttons = new Button[3];
 	
@@ -81,8 +81,8 @@ public class RenderMenu implements Renderer{
 		g.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
 		int i,j,data;
 		double exx,exy;
-		Position p = new Position(w.campos.x+5
-				,((ClassicGenerator)w.getGenerator()).getHeight(w.campos.x + wbcount*w.campos.cx - wbcount/2f) + hbcount,
+		Position p = new Position(w.campos.x+1
+				,((ClassicGenerator)w.getGenerator()).getHeight(w.campos.x + wbcount*w.campos.cx - wbcount/2f) + hbcount + 10,
 				w.campos.getCX(),
 				0
 				);
@@ -106,10 +106,19 @@ public class RenderMenu implements Renderer{
 					g.setColor(BlockData.toColor(data));
 					g.fillRect((int)((i-exx)*bsize),(int)((j-exy)*bsize), bsize, bsize);
 				}
-				data = w.getData(p);
+				data = w.getData(p.clone());
 				if(data != BlockData.ID_AIR) {
 					g.setColor(BlockData.toColor(data));
-					g.fillRect((int)((i-exx)*bsize),(int)((j-exy)*bsize), bsize, bsize);
+					//g.fillRect((int)((i-exx)*bsize),(int)((j-exy)*bsize), bsize, bsize);
+					g.drawImage(
+							BlockData.toTexture(data,p.getX(), p.getY()),
+							
+							(int)((i-exx)*bsize),(int)((j-exy)*bsize), // dx1,dy1
+							(int)((i-exx)*bsize)+bsize,(int)((j-exy)*bsize)+bsize, // dx2,dy2
+							
+							0,0, // sx1,sy1
+							16,16,null // sx2,sy2
+					);
 				}
 			}
 		}

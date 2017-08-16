@@ -7,6 +7,7 @@ import com.vanyle.menu.RenderMenu;
 import com.vanyle.physics.PhysicProcessor;
 import com.vanyle.physics.World;
 import com.vanyle.procedural.ClassicGenerator;
+import com.vanyle.procedural.TextureGenerator;
 
 public class Explorium {
 
@@ -15,7 +16,7 @@ public class Explorium {
 	public static final boolean MOBS = true;
 	public static final boolean WIDE_FOV = false;
 	
-	public static final long GLOBAL_SEED = 10l;
+	public static final long GLOBAL_SEED = (long)(Math.random()*100000l);
 	
 	private static PlayerInputManager pim;
 	private static Window w;
@@ -28,6 +29,8 @@ public class Explorium {
 	private static PhysicProcessor p;
 	
 	public static void main(String[] args) {
+		
+		TextureGenerator.setup();
 		
 		pim = new PlayerInputManager();
 		

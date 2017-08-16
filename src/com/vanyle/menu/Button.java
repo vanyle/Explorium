@@ -11,7 +11,7 @@ public class Button {
 	int y;
 	private String text;
 	private int size;
-	private int padding = 10;
+	private int padding = 20;
 	BufferedImage bg = RenderMenu.buttonbg;
 	private int width;
 	private int height;

@@ -1,6 +1,6 @@
 package com.vanyle.procedural;
 
-import com.vanyle.data.BlockData;
+import com.vanyle.blocks.Blocks;
 import com.vanyle.data.Structure;
 import com.vanyle.data.StructureData;
 import com.vanyle.math.VMath;
@@ -149,11 +149,11 @@ public class ClassicGenerator extends Generator{
 				
 				if(!isACave(pos[0], Math.floor(h)+1)) {
 					if((Math.floor(pos[0]) == x || Math.floor(pos[0]) == x+1) && y > treetop){
-						c.data[i][j][1] = BlockData.ID_TRUNK;
+						c.data[i][j][1] = Blocks.BlockTrunk.id();
 					}else if(p.dist(new Position(pos[0],treetop,0,0)) < leavesRadiusSquared + 
 							leavesRadiusSpanSquared*VMath.noise(pos[0]/4f - 0.1f, seed+0.1f, seed*3)) {
 						
-						c.data[i][j][1] = BlockData.ID_LEAF;
+						c.data[i][j][1] = Blocks.BlockLeaf.id();
 					}
 				}
 			}
@@ -178,38 +178,38 @@ public class ClassicGenerator extends Generator{
 	}	
 	public void skyGen(Chunk c,Position p,int i,int j) {
 		double d = VMath.noise( (p.cx*CSIZE+i)/40f, (p.cy*CSIZE+j)/40f, seed);
-		c.data[i][j][0] = d > 0.3 ? BlockData.ID_CLOUD : BlockData.ID_AIR;
+		c.data[i][j][0] = d > 0.3 ? Blocks.BlockCloud.id() : Blocks.BlockAir.id();
 	}
 	public void plainsGen(Chunk c,Position p,int i,int j,double h) { // generate plains
 		boolean cave = isACave(p.cx*CSIZE+i,p.cy*CSIZE+j);
 		double jid = j + toInt(p.getCY())*CSIZE;
 		if(!cave) {
 			if(jid > h && jid < h+1){
-				c.data[i][j][0] = BlockData.ID_GRASS;
+				c.data[i][j][0] = Blocks.BlockGrass.id();
 				if(getBiome(p.cx*CSIZE + i) > 0.5) {
-					c.data[i][j][0] = BlockData.ID_SAND;
+					c.data[i][j][0] = Blocks.BlockSand.id();
 				}
 			}else if(jid > h){
-				c.data[i][j][0] = BlockData.ID_DIRT;
+				c.data[i][j][0] = Blocks.BlockDirt.id();
 				if(getBiome(p.cx*CSIZE + i) > 0.5) {
-					c.data[i][j][0] = BlockData.ID_SAND;
+					c.data[i][j][0] = Blocks.BlockSand.id();
 				}
 			}
 		}else{
-			c.data[i][j][0] = BlockData.ID_AIR; // cave entrance
+			c.data[i][j][0] = Blocks.BlockAir.id(); // cave entrance
 		}
 	}
 	public void caveGen(Chunk c,Position p,int i,int j,double h) { // generate a cave world
 		boolean cave = isACave(p.cx*CSIZE+i,p.cy*CSIZE+j);
-		int filler = BlockData.ID_STONE;
+		int filler = Blocks.BlockStone.id();
 		double waterc = getBiome(p.cx*CSIZE + i)/10f;
 		
 		if( getBiome(p.cx*CSIZE + i) > 0.5 && (p.cy*CSIZE+j - h)/100f < getBiome(p.cx*CSIZE + i)-0.5 ){
-			filler = BlockData.ID_SAND;
+			filler = Blocks.BlockSand.id();
 		}
-		int r = cave ? BlockData.ID_AIR : filler;
-		if(r == BlockData.ID_AIR && VMath.numerate((int)(p.cx*CSIZE+i),(int)(p.cy*CSIZE+j), 0) > (0.80+waterc)) {
-			r = BlockData.ID_WATER;
+		int r = cave ? Blocks.BlockAir.id() : filler;
+		if(r == Blocks.BlockAir.id() && VMath.numerate((int)(p.cx*CSIZE+i),(int)(p.cy*CSIZE+j), 0) > (0.80+waterc)) {
+			r = Blocks.BlockWater.id();
 		}
 		c.data[i][j][0] = r;
 	}

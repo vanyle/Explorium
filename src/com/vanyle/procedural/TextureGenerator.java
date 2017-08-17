@@ -3,37 +3,30 @@ package com.vanyle.procedural;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import com.vanyle.data.BlockData;
+import com.vanyle.blocks.Blocks;
 import com.vanyle.math.VMath;
 
 public class TextureGenerator {
 	
+	public static final int TEX_W = 256;
+	public static final int TEX_H = 256;
 	
-	public static void setup() {
-		for(int i = 0;i < BlockData.blockType;i++) {
-			for(int j = 0;j < BlockData.blockDiversity;j++)
-				BlockData.texturemap[i][j] = blockIdToImage(i,16,16, Math.random()*10);
-		}
+	// TODO uses int[][] to represent image for optimization.
+	public static BufferedImage blockIdToImage(int id,double seed){
+		return Blocks.block(id).b().getTexture(seed);
 	}
-	
-	// uses int[][] to represent image for optimization.
-	public static BufferedImage blockIdToImage(int id,int w,int h,double seed){
-		BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_4BYTE_ABGR);
+	public static Color fade(Color a,Color b,double dist) { // dist=0 => a, dist=1 => b 
+		return new Color(
+				(int)(a.getRed() + (b.getRed() - a.getRed()) * dist),
+				(int)(a.getGreen() + (b.getGreen() - a.getGreen()) * dist),
+				(int)(a.getBlue() + (b.getBlue() - a.getBlue()) * dist));
+	}
+	public static BufferedImage generateButtonTexture(Color a,int w,int h,double seed) {
+		BufferedImage bi = new BufferedImage(w,h, BufferedImage.TYPE_4BYTE_ABGR);
 		Color c;
-		Color mainc = BlockData.toColor(id);
-		
-		double[] noiseData = BlockData.getNoiseData(id);
-		double variX = noiseData[0];
-		double variY = noiseData[1];
-		double strength = noiseData[2];
-		
-		double smallVY = noiseData[3];
-		double smallVX = noiseData[4];
-		double weakStrength = noiseData[5];
-		
-		for(int i = 0;i < w;i++) {
-			for(int j = 0;j < h;j++) {
-				c = strength != 0 && weakStrength != 0 ? trick(mainc,turbulence(i+3.1f,j+3.1f,1,seed)*80) : mainc;
+		for(int i = 0;i < bi.getWidth();i++) {
+			for(int j = 0;j < bi.getHeight();j++) {
+				c = TextureGenerator.trick(a,VMath.noise(i/12. + .1, j/2. + .1, seed + .1)*60);
 				bi.setRGB(i, j, c.getRGB());
 			}
 		}
@@ -45,18 +38,15 @@ public class TextureGenerator {
 		int b = (int)Math.max(Math.min(c.getBlue()+tr,255),0);
 		return new Color(r,g,b);
 	}
-	private static double turbulence(double x, double y, double size,double seed){ // generate fractal noise
+	public static double turbulence(double x, double y, double size,double seed){ // generate fractal noise
 	  double value = 0.0, initialSize = size;
 	  while(size >= 1){
 	    value += VMath.noise(x / size, y / size, seed*3 - 0.1f) * size;
 	    size /= 2.0;
 	  }
-	  if(value < 0.1) {
-		  System.out.println(value/initialSize);
-	  }
 	  return value / initialSize;
 	}
-	private static double halton(int base, int index) {
+	public static double halton(int base, int index) {
 		double f = 1.0;
 		double r = 0.0;
 		while(index > 0){
@@ -70,7 +60,7 @@ public class TextureGenerator {
 	 * @param regions
 	 * @return True then the map is ready
 	 */
-	private static boolean regionFill(double[][] regions){
+	public static boolean regionFill(double[][] regions){
 		boolean f = false;
 		for(int i = 0;i < regions.length;i++) {
 			for(int j = 0;j < regions[i].length;j++) {

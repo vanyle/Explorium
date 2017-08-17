@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import com.vanyle.data.BlockData;
+import com.vanyle.blocks.Blocks;
 import com.vanyle.data.FontData;
 import com.vanyle.graphics.PlayerInputManager;
 import com.vanyle.graphics.Renderer;
@@ -32,8 +32,10 @@ public class RenderMenu implements Renderer{
 	public final static Color skycolor = new Color(0.0195f, 0.6015625f, 0.953125f);
 	public final int bsize = Window.WIDTH / wbcount;
 	
-	public static BufferedImage buttonbg = TextureGenerator.blockIdToImage(BlockData.ID_TRUNK, 20, 10, 0.1);
-	public static BufferedImage pressedbg = TextureGenerator.blockIdToImage(BlockData.ID_LADDER, 20, 10, 0.1);
+	public static BufferedImage buttonbg = TextureGenerator.generateButtonTexture(Blocks.BlockTrunk.b().mainColor,32,16,(double)Explorium.GLOBAL_SEED/100d);
+	public static BufferedImage pressedbg = TextureGenerator.generateButtonTexture(
+			TextureGenerator.trick(Blocks.BlockTrunk.b().mainColor,-30)
+	,32,16,(double)Explorium.GLOBAL_SEED/100d);
 	
 	public static Button[] buttons = new Button[3];
 	
@@ -102,22 +104,27 @@ public class RenderMenu implements Renderer{
 				p.add(cpos);
 				
 				data = w.getBackgroundData(p.clone());
-				if(data != BlockData.ID_AIR) {
-					g.setColor(BlockData.toColor(data));
-					g.fillRect((int)((i-exx)*bsize),(int)((j-exy)*bsize), bsize, bsize);
-				}
-				data = w.getData(p.clone());
-				if(data != BlockData.ID_AIR) {
-					g.setColor(BlockData.toColor(data));
-					//g.fillRect((int)((i-exx)*bsize),(int)((j-exy)*bsize), bsize, bsize);
+				if(data != Blocks.BlockAir.id()) {
 					g.drawImage(
-							BlockData.toTexture(data,p.getX(), p.getY()),
+							Blocks.block(data).b().texture,
 							
 							(int)((i-exx)*bsize),(int)((j-exy)*bsize), // dx1,dy1
 							(int)((i-exx)*bsize)+bsize,(int)((j-exy)*bsize)+bsize, // dx2,dy2
 							
-							0,0, // sx1,sy1
-							16,16,null // sx2,sy2
+							p.getX()%16 * 16,p.getY()%16 * 16, // sx1,sy1
+							p.getX()%16 * 16 + 16,p.getY()%16 * 16 + 16,null // sx2,sy2
+					);
+				}
+				data = w.getData(p.clone());
+				if(data != Blocks.BlockAir.id()) {
+					g.drawImage(
+							Blocks.block(data).b().texture,
+							
+							(int)((i-exx)*bsize),(int)((j-exy)*bsize), // dx1,dy1
+							(int)((i-exx)*bsize)+bsize,(int)((j-exy)*bsize)+bsize, // dx2,dy2
+							
+							p.getX()%16 * 16,p.getY()%16 * 16, // sx1,sy1
+							p.getX()%16 * 16 + 16,p.getY()%16 * 16 + 16,null // sx2,sy2
 					);
 				}
 			}

@@ -2,7 +2,7 @@ package com.vanyle.procedural;
 
 import java.util.Random;
 
-import com.vanyle.data.BlockData;
+import com.vanyle.blocks.Blocks;
 import com.vanyle.physics.Chunk;
 import com.vanyle.physics.Position;
 
@@ -10,7 +10,7 @@ public class InteriorGenerator extends Generator{
 	
 	private int ZONE_WIDTH = 60;
 	private int ZONE_HEIGHT = 30;
-	private int WALL_MATERIAL = BlockData.ID_TRUNK;
+	private int WALL_MATERIAL = Blocks.BlockTrunk.id();
 	
 	private double FLOOR_SIZE = 15;
 	private double ROOM_SIZE = 20;
@@ -104,18 +104,18 @@ public class InteriorGenerator extends Generator{
 					}
 					// generate a door
 					if(y < floorData[0] && y > floorData[0]-6 && (x == 6 || x == 7 || x == 8)) {
-						c.data[i][j][1] = BlockData.ID_DOOR;
+						c.data[i][j][1] = Blocks.BlockDoor.id();
 					}
 					for(int k = 0;k < floorData.length;k++) {
 						if(y == floorData[k] && (k == floorData.length-1 || x != floorHoles[k] && x != floorHoles[k]+1 && x != floorHoles[k]+2)) {
 							c.data[i][j][0] = WALL_MATERIAL;
 							continue;
 						}else if(y == floorData[k] && (x == floorHoles[k] || x == floorHoles[k]+1 || x == floorHoles[k]+2)) {
-							c.data[i][j][0] = BlockData.ID_LADDER;
+							c.data[i][j][0] = Blocks.BlockLadder.id();
 						}
 						if(y > floorData[k] && y < floorData[k+1]) {
 							if(k < floorHoles.length && (x == floorHoles[k] || x == floorHoles[k]+1 || x == floorHoles[k]+2)) {
-								c.data[i][j][0] = BlockData.ID_LADDER;
+								c.data[i][j][0] = Blocks.BlockLadder.id();
 							}
 						}
 					}
@@ -130,7 +130,7 @@ public class InteriorGenerator extends Generator{
 						}
 					}
 				}else{
-					c.data[i][j][0] = BlockData.ID_EMPTYNESS;
+					c.data[i][j][0] = Blocks.BlockVoid.id(); // emptyness
 				}
 			}
 		}

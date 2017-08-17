@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Iterator;
 
-import com.vanyle.data.BlockData;
+import com.vanyle.blocks.Blocks;
 import com.vanyle.data.FontData;
 import com.vanyle.life.Entity;
 import com.vanyle.main.Explorium;
@@ -56,13 +56,13 @@ public class Render implements Renderer{
 				p.add(cpos);
 				
 				data = w.getBackgroundData(p.clone());
-				if(data != BlockData.ID_AIR) {
-					g.setColor(BlockData.toColor(data));
+				if(Blocks.block(data) != Blocks.BlockAir) {
+					g.setColor(Blocks.block(data).b().mainColor);
 					g.fillRect((int)((i-exx)*bsize),(int)((j-exy)*bsize), bsize, bsize);
 				}
 				data = w.getData(p);
-				if(data != BlockData.ID_AIR) {
-					g.setColor(BlockData.toColor(data));
+				if(Blocks.block(data) != Blocks.BlockAir) {
+					g.setColor(Blocks.block(data).b().mainColor);
 					g.fillRect((int)((i-exx)*bsize),(int)((j-exy)*bsize), bsize, bsize);
 				}
 			}

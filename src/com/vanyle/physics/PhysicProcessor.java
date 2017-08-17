@@ -3,7 +3,7 @@ package com.vanyle.physics;
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
 
-import com.vanyle.data.BlockData;
+import com.vanyle.blocks.Blocks;
 import com.vanyle.graphics.PlayerInputManager;
 import com.vanyle.graphics.Render;
 import com.vanyle.life.Entity;
@@ -12,7 +12,7 @@ import com.vanyle.main.Explorium;
 import com.vanyle.math.VMath;
 
 public class PhysicProcessor implements Runnable{
-	
+
 	World w;
 	PlayerInputManager playerinput;
 	Render r;
@@ -96,13 +96,13 @@ public class PhysicProcessor implements Runnable{
 				}
 				p.add(e.p.clone());
 				testid = w.getData(p.clone());
-				if(testid != BlockData.ID_AIR && testid != BlockData.ID_WATER && testid != BlockData.ID_LADDER) { 
+				if(Blocks.block(testid).b().isCollide) { 
 					// dont collide with fluids, cloud are not fluids
 					return REGULAR_COLLIDE;
 				}
-				if(testid == BlockData.ID_LADDER)
+				if(testid == Blocks.BlockLadder.id())
 					isladder = true;
-				if(testid == BlockData.ID_WATER)
+				if(testid == Blocks.BlockWater.id())
 					iswater = true;
 			}
 		}
@@ -137,10 +137,10 @@ public class PhysicProcessor implements Runnable{
 			if(playerinput.keymap[KeyEvent.VK_D])
 				w.player.speedx += MoveStrengh;
 			if(playerinput.keymap[KeyEvent.VK_E]) // tries to enter a home
-				if(eCollidesWith(w.player,0,0,BlockData.ID_DOOR))
+				if(eCollidesWith(w.player,0,0,Blocks.BlockDoor.id()))
 					w.loadInsideWorld();
 			if(playerinput.keymap[KeyEvent.VK_A]) // Back to overworld
-				if(eCollidesWith(w.player,0,0,BlockData.ID_DOOR))
+				if(eCollidesWith(w.player,0,0,Blocks.BlockDoor.id()))
 					w.loadRegularWorld();
 			
 			w.campos.converge(w.player.p,0.05,CSIZE/2,CSIZE/4);
@@ -153,23 +153,24 @@ public class PhysicProcessor implements Runnable{
 							
 							p = new Position(i,j,k,l);
 							// 1. Liquid falls (usually. Yes, I'm thinking about you helium)
-							if(w.getRelativeData(p) == BlockData.ID_WATER) {
+							// TODO more general code about fluids, not just water
+							if(w.getRelativeData(p) == Blocks.BlockWater.id()) {
 								ptest = new Position(i,j+1,k,l);
-								if(w.getRelativeData(ptest) == BlockData.ID_AIR) {
-									w.setRelativeData(p, BlockData.ID_AIR);
-									w.setRelativeData(ptest, BlockData.ID_WATER);
+								if(w.getRelativeData(ptest) == Blocks.BlockAir.id()) {
+									w.setRelativeData(p, Blocks.BlockAir.id());
+									w.setRelativeData(ptest, Blocks.BlockWater.id());
 									continue;
 								}
 								ptest = new Position(i+1,j,k,l);
-								if(w.getRelativeData(ptest) == BlockData.ID_AIR && Math.random() > 0.8) {
-									w.setRelativeData(p, BlockData.ID_AIR);
-									w.setRelativeData(ptest, BlockData.ID_WATER);
+								if(w.getRelativeData(ptest) == Blocks.BlockAir.id() && Math.random() > 0.8) {
+									w.setRelativeData(p, Blocks.BlockAir.id());
+									w.setRelativeData(ptest, Blocks.BlockWater.id());
 									continue;
 								}
 								ptest = new Position(i-1,j,k,l);
-								if(w.getRelativeData(ptest) == BlockData.ID_AIR && Math.random() > 0.8) {
-									w.setRelativeData(p, BlockData.ID_AIR);
-									w.setRelativeData(ptest, BlockData.ID_WATER);
+								if(w.getRelativeData(ptest) == Blocks.BlockAir.id() && Math.random() > 0.8) {
+									w.setRelativeData(p, Blocks.BlockAir.id());
+									w.setRelativeData(ptest, Blocks.BlockWater.id());
 									continue;
 								}
 							}

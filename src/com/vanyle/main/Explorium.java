@@ -7,11 +7,10 @@ import com.vanyle.menu.RenderMenu;
 import com.vanyle.physics.PhysicProcessor;
 import com.vanyle.physics.World;
 import com.vanyle.procedural.ClassicGenerator;
-import com.vanyle.procedural.TextureGenerator;
 
 public class Explorium {
 
-	public static final boolean SMALL_WINDOW = false;
+	public static final boolean SMALL_WINDOW = true;
 	public static final boolean GOD_MOD = false;
 	public static final boolean MOBS = true;
 	public static final boolean WIDE_FOV = false;
@@ -29,9 +28,6 @@ public class Explorium {
 	private static PhysicProcessor p;
 	
 	public static void main(String[] args) {
-		
-		TextureGenerator.setup();
-		
 		pim = new PlayerInputManager();
 		
 		r_menu = new RenderMenu(pim);

@@ -23,6 +23,7 @@ Added custom structures (houses) and custom strucutre support.
 Added custom font for the game
 Added procedural music support
 The Player can switch between An "Inside" dimension and An "Outside" Dimension by pressing A and E.
+<<<<<<< HEAD
 ## 2.2.7
 Added a small menu system
 Settings aren't implemented yet
@@ -36,3 +37,14 @@ Added entity collision : You can jump on slimes, slimes can jump on you, you can
 Added a menu and settings
 Added climbing to make movement easier
 Reworked on structure generation to make things cleaner (and better)
+=======
+# 2.2.7
+Improved the content of the house
+Added a new block : The ladder
+Full custom font support for all common used characters
+Improved water : Player can swim
+Slimes cannot spawn in houses
+Added basic inventory management support and RPG stats
+Added a menu screen (Only Play button works)
+Improved procedural music support
+>>>>>>> a73a17f8ecd6c097ac2f0c9d369ff998f87d41a9

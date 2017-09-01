@@ -2,8 +2,8 @@
  - [ ] Multiplayer
  - [ ] GodMod = invincible + debugs (GodModOff = no debugs + not invincible)
  - [ ] Other entities (friendly or not = [])
- - [ ] Mana Bar and Spells
- - [ ] Menu and Settings
+ - [ ] Mana Bar and Spells 10%
+ - [ ] Menu and Settings 50%
  - [x] Water is in the background
  - [ ] Player can attack
  - [ ] Player can die

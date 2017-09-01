@@ -593,6 +593,14 @@ public class FontData {
 			{1,1,1},
 			{1,0,1}	
 	};
+	public static int[][] CHAR_MISC_EQUAL = {
+			{1,1,1,1,1},
+			{1,1,1,1,1},
+			{0,0,0,0,0},
+			{1,1,1,1,1},
+			{0,0,0,0,0},
+			{1,1,1,1,1}	
+	};
 	public static int length(String s,int size) {
 		int l = 0;
 		for(int i = 0;i < s.length();i++) {
@@ -762,6 +770,8 @@ public class FontData {
 				return CHAR_MISC_EXCLAMATION_MARK;
 			case '?':
 				return CHAR_MISC_QUESTION_MARK;
+			case '=':
+				return CHAR_MISC_EQUAL;
 			default:
 				return CHAR_SPACE;
 		}

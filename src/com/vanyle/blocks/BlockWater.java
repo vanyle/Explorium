@@ -9,6 +9,7 @@ import com.vanyle.procedural.TextureGenerator;
 public class BlockWater extends Block{
 	public BlockWater(double seed) {
 		super(seed);
+		isCollide = false;
 	}
 
 	@Override

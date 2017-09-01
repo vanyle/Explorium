@@ -8,6 +8,7 @@ public class PlayerInputManager implements PlayerInput{
 	public boolean[] keymap = new boolean[16*16*16*16]; // 8 bytes of bools
 	public int mouseX = 0;
 	public int mouseY = 0;
+	public boolean isMouseDown = false;
 	
 	private UserEvents u;
 	
@@ -37,12 +38,18 @@ public class PlayerInputManager implements PlayerInput{
 
 	@Override
 	public void mouseDown(MouseEvent me) {
+		mouseX = me.getX();
+		mouseY = me.getY();
+		isMouseDown = true;
 		if(u != null)
 			u.mouseDown(me);
 	}
 
 	@Override
 	public void mouseUp(MouseEvent me) {
+		mouseX = me.getX();
+		mouseY = me.getY();
+		isMouseDown = false;
 		if(u != null)
 			u.mouseUp(me);
 	}

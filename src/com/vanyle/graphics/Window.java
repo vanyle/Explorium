@@ -1,6 +1,7 @@
 package com.vanyle.graphics;
 
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -9,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
@@ -36,18 +38,19 @@ public class Window extends JFrame implements WindowListener, KeyListener, Mouse
 			setUndecorated(true);
 		}
 		setVisible(true);
-		
-		addWindowListener(this);
-		addKeyListener(this);
-		addMouseListener(this);
-		addMouseMotionListener(this);
-		
 		setResizable(false);
 		
 		this.pi = pi;
 		
 		p = new Panel(r);
 		setContentPane(p);
+		
+		addWindowListener(this);
+		addKeyListener(this);
+		p.addMouseListener(this);
+		p.addMouseMotionListener(this);
+		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new BufferedImage(16, 16, BufferedImage.TYPE_4BYTE_ABGR), new Point(0, 0), "blank cursor"));
+		
 		p.startRender();
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 	}

@@ -3,6 +3,7 @@ package com.vanyle.procedural;
 import com.vanyle.blocks.Blocks;
 import com.vanyle.data.Structure;
 import com.vanyle.data.StructureData;
+import com.vanyle.math.SimplexNoise;
 import com.vanyle.math.VMath;
 import com.vanyle.physics.Chunk;
 import com.vanyle.physics.Position;
@@ -15,13 +16,6 @@ import com.vanyle.physics.Position;
  */
 public class ClassicGenerator extends Generator{
 	
-	
-	private static final double cavefreq = 100;
-	private static final double caveslopeL = 0.1;
-	private static final double caveslopeV = -2.5;
-	private static final double caveslopeB = -0.5; // to go back up
-	private static final double cavesize = 16;
-	
 	private static final double structureFrequency = 40;
 	
 	// Control tree shape
@@ -31,9 +25,6 @@ public class ClassicGenerator extends Generator{
 	private static final double minTreeHeight = 5;
 	private static final double TreeHeightSpan = 10;
 	
-	private static final double rug = 3; // small perlin strenght
-	private static final double vari = 20; // medium perlin strenght
-	private static final double trend = 80; // big perlin strenght
 	
 	public ClassicGenerator(long seed) {
 		super(seed);
@@ -63,7 +54,7 @@ public class ClassicGenerator extends Generator{
 			}else if(cheight * CSIZE + j < h-20){
 				skyGen(c,p,i,j);
 			}
-			strucutreBlock(i,j,p.cx*CSIZE+i,p.cy*CSIZE+j,c);
+			structureBlock(i,j,(int)p.cx * CSIZE+i,cheight * CSIZE+j,c);
 		}
 	}
 	public double getBiome(double xpos) {
@@ -77,20 +68,39 @@ public class ClassicGenerator extends Generator{
 		return h;
 	}
 	public double[] nearestStructureBlock(double x,double y) {
-		double xstruct = x - VMath.mod(x,structureFrequency);
-		double ystruct = y - VMath.mod(y,structureFrequency);
-		xstruct = Math.abs(xstruct-x) < Math.abs(xstruct+structureFrequency-x) ? xstruct : xstruct+structureFrequency;
-		xstruct = Math.abs(xstruct-x) < Math.abs(xstruct-structureFrequency-x) ? xstruct : xstruct-structureFrequency;
-		ystruct = Math.abs(ystruct-y) < Math.abs(ystruct+structureFrequency-y) ? ystruct : ystruct+structureFrequency;
-		ystruct = Math.abs(ystruct-y) < Math.abs(ystruct-structureFrequency-y) ? ystruct : ystruct-structureFrequency;
+		
+		// list all the possible structures that are near and find the closest one
+		
+		double currNearX = 0,currNearY = 0;
+		double xstruct,ystruct;
+		
+		for(int i = 0;i < 3;i++) {
+			for(int j = 0;j < 3;j++) {
+				xstruct = x - VMath.mod(x,structureFrequency) + structureFrequency * (i-1);
+				ystruct = y - VMath.mod(y,structureFrequency) + structureFrequency * (j-1);
+				
+				xstruct += VMath.noise(xstruct/3. + -12., ystruct/3. + 63., -42.4) * structureFrequency/3.;
+				ystruct += VMath.noise(xstruct/3. + 42., ystruct/3. + -86., 32.4) * structureFrequency/3.;
+				
+				xstruct = toInt(xstruct);
+				ystruct = toInt(ystruct);
+				
+				if((i == 0 && j == 0) || VMath.dist(xstruct,ystruct,x,y) < VMath.dist(currNearX,currNearY,x,y)) {
+					currNearX = xstruct;
+					currNearY = ystruct;
+				}
+			}
+		}
+		
+		// find nearest structlist to x;y
 		
 		double[] pos = {
-				xstruct + VMath.noise(xstruct/3f + 0.1, seed+0.1 ,seed-0.1) * structureFrequency/3,
-				ystruct + VMath.noise(ystruct/3f + 0.1, seed-0.1 ,seed-0.3) * structureFrequency/3
+				currNearX,
+				currNearY
 			};
 		return pos;
 	}
-	public void strucutreBlock(int i,int j,double x,double y,Chunk c) { // only allowed to edit i,j
+	public void structureBlock(int i,int j,double x,double y,Chunk c) { // only allowed to edit i,j
 		
 		double[] pos = nearestStructureBlock(x, y);
 		double h = getHeight(pos[0]);
@@ -101,7 +111,8 @@ public class ClassicGenerator extends Generator{
 			Structure cr = StructureData.list[k];
 			// compute position of the nearest structure.
 			if(cr.biomeRangeMaximum > biome && cr.biomeRangeMinimum < biome) {
-				// compute height of the structure if adjustHeight
+	
+				// Handel rarity
 				if(VMath.noise(pos[0]*2 + 2.1, pos[0]*2 - 2.1, seed+0.3) > -1 + 2f/cr.rarity)
 					continue;
 				
@@ -113,10 +124,11 @@ public class ClassicGenerator extends Generator{
 				if(cr.mustBeinCave && !cave)
 					continue;
 				
+				// compute height of the structure if adjustHeight. adjust strenghth must be less than half  the structure frequency
 				if(cr.adjustHeight) {
-					if(cr.HeightRangeMinimum > pos[1]-h-cr.getHeight()/2 && cr.HeightRangeMinimum < pos[1]-h+30-cr.getHeight()/2) { // 10 : adjust strength
+					if(cr.HeightRangeMinimum > pos[1]-h-cr.getHeight()/2 && cr.HeightRangeMinimum < pos[1]-h+20-cr.getHeight()/2) { // 20 : adjust strength
 						pos[1] = h+cr.HeightRangeMinimum;
-					}else if(cr.HeightRangeMaximum < pos[1]-h+cr.getHeight()/2 && cr.HeightRangeMaximum > pos[1]-h-30+cr.getHeight()/2) {
+					}else if(cr.HeightRangeMaximum < pos[1]-h+cr.getHeight()/2 && cr.HeightRangeMaximum > pos[1]-h-20+cr.getHeight()/2) {
 						pos[1] = h+cr.HeightRangeMaximum;
 					}
 				}
@@ -128,7 +140,7 @@ public class ClassicGenerator extends Generator{
 				// generate structure assuming pos[0] ; pos[1] is the center
 				for(int l = 0;l < cr.getWidth();l++) {
 					for(int m = 0;m < cr.getHeight();m++) {
-						if(Math.floor(x) == toInt(pos[0])+l-cr.getWidth()/2 && Math.floor(y) == toInt(pos[1])+m-cr.getHeight()/2) {
+						if(toInt(x) == toInt(pos[0])+l-cr.getWidth()/2 && toInt(y) == toInt(pos[1])+m-cr.getHeight()/2) {
 							c.data[i][j][0] = cr.getData(l, m);
 							c.data[i][j][1] = cr.getGhostData(l, m);
 						}
@@ -141,7 +153,7 @@ public class ClassicGenerator extends Generator{
 		boolean cave = isACave(pos[0], Math.floor(h)+1); // is cave below
 		
 		if(!cave && !notree) {
-			if(getBiome(pos[0]) < 0.5 && y-h < 3) { // no tree in desert TODO cactus
+			if(getBiome(pos[0]) < 0.5 && Math.abs(pos[1]-h) < 10 && y-h < 3) { // no tree in desert TODO cactus
 				double treeheight = minTreeHeight + VMath.numerate(toInt(pos[0]),toInt(h), (int)(seed+3))*TreeHeightSpan;
 				double treetop = h - treeheight;
 				
@@ -150,7 +162,8 @@ public class ClassicGenerator extends Generator{
 				if(!isACave(pos[0], Math.floor(h)+1)) {
 					if((Math.floor(pos[0]) == x || Math.floor(pos[0]) == x+1) && y > treetop){
 						c.data[i][j][1] = Blocks.BlockTrunk.id();
-					}else if(p.dist(new Position(pos[0],treetop,0,0)) < leavesRadiusSquared + 
+					}
+					if(p.dist(new Position(pos[0],treetop,0,0)) < leavesRadiusSquared + 
 							leavesRadiusSpanSquared*VMath.noise(pos[0]/4f - 0.1f, seed+0.1f, seed*3)) {
 						
 						c.data[i][j][1] = Blocks.BlockLeaf.id();
@@ -160,21 +173,11 @@ public class ClassicGenerator extends Generator{
 		}
 	}
 	public boolean isACave(double x,double y) {
-		return Math.abs( VMath.mod((y - x*caveslopeL
-				+ VMath.noise(x/250f, y/250f, seed*2+0.1f)*trend
-				+ VMath.noise(x/20f, y/40f, seed*3-0.1f)*vari
-				+ VMath.noise(x/5f, y/5f, seed*7+0.2f)*rug 
-					),cavefreq) ) < cavesize ||
-		 Math.abs( VMath.mod((y - x*caveslopeV
-				+ VMath.noise(x/250f, y/250f, seed*5+1)*trend
-				+ VMath.noise(x/20f, y/40f, seed*9+1)*vari
-				+ VMath.noise(x/5f, y/5f, seed+1)*rug 
-					),cavefreq * 6) ) < cavesize ||
-		 Math.abs( VMath.mod((y - x*caveslopeB
-					+ VMath.noise(x/250f, y/250f, seed*4.2+1)*trend
-					+ VMath.noise(x/20f, y/40f, seed*5.6+1)*vari/2
-					+ VMath.noise(x/5f, y/5f, seed*8.9+1)*rug 
-						),cavefreq*10) ) < cavesize; // really rare
+			return Math.abs(	
+				//VMath.noise( x / 40f + 63f ,y / 20f + 41f , seed + 9.6f) +
+				//VMath.noise( x / 40f + 33f ,y / 20f + 82f , seed + 7.5f) +
+				SimplexNoise.noise( x / 70f + 73f ,y / 70f - 31f , seed - 8.5f) * 0.5 )
+			< 0.1;
 	}	
 	public void skyGen(Chunk c,Position p,int i,int j) {
 		double d = VMath.noise( (p.cx*CSIZE+i)/40f, (p.cy*CSIZE+j)/40f, seed);
@@ -191,7 +194,7 @@ public class ClassicGenerator extends Generator{
 				}
 			}else if(jid > h){
 				c.data[i][j][0] = Blocks.BlockDirt.id();
-				if(getBiome(p.cx*CSIZE + i) > 0.5) {
+				if(getBiome(p.cx*CSIZE + i) > 0.5) { // biome : 1 - 0.5 => desert. 0.5 - -1 => plain
 					c.data[i][j][0] = Blocks.BlockSand.id();
 				}
 			}

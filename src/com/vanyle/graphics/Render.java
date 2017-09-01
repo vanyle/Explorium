@@ -2,6 +2,7 @@ package com.vanyle.graphics;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 import com.vanyle.blocks.Blocks;
@@ -57,13 +58,27 @@ public class Render implements Renderer{
 				
 				data = w.getBackgroundData(p.clone());
 				if(Blocks.block(data) != Blocks.BlockAir) {
-					g.setColor(Blocks.block(data).b().mainColor);
-					g.fillRect((int)((i-exx)*bsize),(int)((j-exy)*bsize), bsize, bsize);
+					g.drawImage(
+							Blocks.block(data).b().texture,
+							
+							(int)((i-exx)*bsize),(int)((j-exy)*bsize), // dx1,dy1
+							(int)((i-exx)*bsize)+bsize,(int)((j-exy)*bsize)+bsize, // dx2,dy2
+							
+							p.getX()%16 * 16,p.getY()%16 * 16, // sx1,sy1
+							p.getX()%16 * 16 + 16,p.getY()%16 * 16 + 16,null // sx2,sy2
+					);
 				}
 				data = w.getData(p);
 				if(Blocks.block(data) != Blocks.BlockAir) {
-					g.setColor(Blocks.block(data).b().mainColor);
-					g.fillRect((int)((i-exx)*bsize),(int)((j-exy)*bsize), bsize, bsize);
+					g.drawImage(
+							Blocks.block(data).b().texture,
+							
+							(int)((i-exx)*bsize),(int)((j-exy)*bsize), // dx1,dy1
+							(int)((i-exx)*bsize)+bsize,(int)((j-exy)*bsize)+bsize, // dx2,dy2
+							
+							p.getX()%16 * 16,p.getY()%16 * 16, // sx1,sy1
+							p.getX()%16 * 16 + 16,p.getY()%16 * 16 + 16,null // sx2,sy2
+					);
 				}
 			}
 		}
@@ -71,21 +86,25 @@ public class Render implements Renderer{
 		Iterator<Entity> ite = w.entitylist.iterator();
 		Entity entity;
 		while(ite.hasNext()) {
-			entity = ite.next();
-			Position tempp = new Position(entity.p.x,entity.p.y,entity.p.getCX(),entity.p.getCY());
-			tempp.substract(cpos);
-			//System.out.println(entity.w);
-			g.setColor(entity.c);
-			g.fillRect((int)(tempp.x()*bsize),(int)(tempp.y()*bsize),(int)(bsize*entity.w),(int)(bsize*entity.h));
+			try {
+				entity = ite.next();
+				Position tempp = new Position(entity.p.x,entity.p.y,entity.p.getCX(),entity.p.getCY());
+				tempp.substract(cpos);
+	
+				g.drawImage(entity.texture,
+						(int)(tempp.x()*bsize),(int)(tempp.y()*bsize),(int)(bsize*entity.w),(int)(bsize*entity.h),null);
+			}catch(ConcurrentModificationException ex) {
+				
+			}
 		}
 		
 		g.setColor(Color.BLACK);
-		
-		for(i = 0;i < debug.length;i++) {
-			if(debug[i] != null) {
-				FontData.drawString(debug[i], 10, DEBUG_FontSize*7*i + 10,g,DEBUG_FontSize);
+		if(Explorium.DEBUG_INFO)
+			for(i = 0;i < debug.length;i++) {
+				if(debug[i] != null) {
+					FontData.drawString(debug[i], 10, DEBUG_FontSize*7*i + 10,g,DEBUG_FontSize);
+				}
 			}
-		}
 	}
 
 }

@@ -17,6 +17,12 @@ public class VMath {
 		}
 		return r;
 	}
+	public static double square(double a) {
+		return a * a;
+	}
+	public static double dist(double x1,double y1,double x2,double y2) {
+		return square(x1-x2) + square(y1-y2);
+	}
 	public static double mod(double a,double b) {
 		a = a%b;
 		if(a<0)a+= b;

@@ -7,6 +7,8 @@ import javax.sound.sampled.SourceDataLine;
 
 public class SoundGenerator {
 	
+	public static double A4 = 440.;
+	
 	private static int SAMPLE_RATE = 44100; // 16 * 1024 or ~16KHz
 	
 	public static final byte FADE_NONE = 0;
@@ -42,6 +44,27 @@ public class SoundGenerator {
 	}
 	private static double sawtooth_wave(double i,double period) {
 		return -1 + 2 * ((i % period) / period);
+	}
+	public static void playGradient(double fstart,double fend,double duration,double volume,byte fadeend,byte wave) {
+		byte[] freqdata = new byte[(int)(duration * SAMPLE_RATE)];
+		
+		// Generate the sound
+		for(int i = 0; i < freqdata.length; i++) {
+			freqdata[i] = (byte)generateValue(i, duration, fstart + (fend-fstart) * (i/(double)freqdata.length), volume, fadeend, wave);
+		}
+			
+		// Play it
+		try {
+			final AudioFormat af = new AudioFormat(SAMPLE_RATE, 8, 1, true, true);
+			SourceDataLine line = AudioSystem.getSourceDataLine(af);
+			line.open(af, SAMPLE_RATE);
+			line.start();
+			line.write(freqdata, 0, freqdata.length);
+		    line.drain();
+		    line.close();
+		}catch(LineUnavailableException e) {
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * Same as playSound but plays several frequences at the same time<br/>
@@ -113,40 +136,45 @@ public class SoundGenerator {
 			e.printStackTrace();
 		}
 	}
-	public static double[] generateSoundData(double freq,double duration,double volume,byte fade,byte wave) {
+	public static double generateValue(double i,double duration,double freq,double volume,byte fade,byte wave) {
 		double period = (double)SAMPLE_RATE / freq;
+		double fade_data = 0;
+		double wave_data = 0;
+		int length = (int)(duration * SAMPLE_RATE);
+		
+		switch(fade) {
+			case FADE_NONE:
+				fade_data = no_fade(i,length);
+				break;
+			case FADE_LINEAR:
+				fade_data = linear_fade(i, length);
+				break;
+			case FADE_QUADRATIC:
+				fade_data = quadratic_fade(i, length);
+				break;
+		}
+		switch(wave) {
+			case WAVE_SIN:
+				wave_data = sin_wave(i, period);
+				break;
+			case WAVE_SQUARE:
+				wave_data = square_wave(i, period);
+				break;
+			case WAVE_TRIANGLE:
+				wave_data = triangle_wave(i, period);
+				break;
+			case WAVE_SAWTOOTH:
+				wave_data = sawtooth_wave(i, period);
+				break;
+		}
+		return (wave_data * BYTE_OSCI * fade_data*volume);
+	}
+	public static double[] generateSoundData(double freq,double duration,double volume,byte fade,byte wave) {
 		double[] freqdata = new double[(int)(duration * SAMPLE_RATE)];
 		
 		// Generate the sound
 		for(int i = 0; i < freqdata.length; i++) {
-			double fade_data = 0;
-			double wave_data = 0;
-			switch(fade) {
-				case FADE_NONE:
-					fade_data = no_fade(i, freqdata.length);
-					break;
-				case FADE_LINEAR:
-					fade_data = linear_fade(i, freqdata.length);
-					break;
-				case FADE_QUADRATIC:
-					fade_data = quadratic_fade(i, freqdata.length);
-					break;
-			}
-			switch(wave) {
-				case WAVE_SIN:
-					wave_data = sin_wave(i, period);
-					break;
-				case WAVE_SQUARE:
-					wave_data = square_wave(i, period);
-					break;
-				case WAVE_TRIANGLE:
-					wave_data = triangle_wave(i, period);
-					break;
-				case WAVE_SAWTOOTH:
-					wave_data = sawtooth_wave(i, period);
-					break;
-			}
-			freqdata[i] = (byte)(wave_data * BYTE_OSCI * fade_data*volume);
+			freqdata[i] = generateValue(i, duration, freq, volume, fade, wave);
 		}
 		return freqdata;
 	}

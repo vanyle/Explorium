@@ -20,7 +20,8 @@ public class BlockTrunk extends Block {
 		Color c;
 		for(int i = 0;i < bi.getWidth();i++) {
 			for(int j = 0;j < bi.getHeight();j++) {
-				c = TextureGenerator.trick(mainColor,VMath.noise(i/2. + .1, j/128. + .1, seed + .1)*60);
+				c = TextureGenerator.fade(mainColor,TextureGenerator.trick(mainColor,-60),Math.abs(VMath.mod(i-j,8)-4)/8);
+				c = TextureGenerator.trick(c, VMath.noise(i, j/10., seed) * 60);
 				bi.setRGB(i, j, c.getRGB());
 			}
 		}

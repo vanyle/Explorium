@@ -8,6 +8,7 @@ public class StructureData {
 		list[0] = new Structure();
 		list[0].name = "House";
 		list[0].rarity = 4;
+		list[0].biomeRangeMaximum = 0.5; // no spawn in deserts
 		list[0].content = "000000000"+"\n" // a house 9x9 made out of dark brick and wood (content is in base 16)
 						+ "000000000"+"\n"
 						+ "000000000"+"\n"
@@ -24,10 +25,10 @@ public class StructureData {
 							+ "599999995"+"\n"
 							+ "599999995"+"\n"
 							+ "599995595"+"\n"
-							+ "59dd95595"+"\n"
-							+ "59dd99995"+"\n"
-							+ "59dd99995"+"\n"
-							+ "59dd99995"+"\n"
+							+ "59cc95595"+"\n"
+							+ "59cc99995"+"\n"
+							+ "59cc99995"+"\n"
+							+ "59cc99995"+"\n"
 							+ "555555555"+"\n"
 							+ "222222222"+"\n"
 							+ "000000000"+"\n"

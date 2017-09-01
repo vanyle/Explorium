@@ -23,3 +23,16 @@ Added custom structures (houses) and custom strucutre support.
 Added custom font for the game
 Added procedural music support
 The Player can switch between An "Inside" dimension and An "Outside" Dimension by pressing A and E.
+## 2.2.7
+Added a small menu system
+Settings aren't implemented yet
+Added ladder to move through the levels of the house.
+## 2.3.0
+Added Textures !!
+Cave generation redone. Caves are now more natural and random.
+Improved Jumping and fixed jumping glitches
+Added creepy black statues apearing through the world
+Added entity collision : You can jump on slimes, slimes can jump on you, you can push them around and iteract with them
+Added a menu and settings
+Added climbing to make movement easier
+Reworked on structure generation to make things cleaner (and better)

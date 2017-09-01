@@ -15,8 +15,8 @@ public class Structure {
 	public int[][] raw;
 	public int[][] rawghost;
 	
-	public int biomeRangeMinimum = -1;
-	public int biomeRangeMaximum = 1;
+	public double biomeRangeMinimum = -1;
+	public double biomeRangeMaximum = 1;
 	public int HeightRangeMaximum = -3; // as a distance from h.
 	public int HeightRangeMinimum = -3;
 	

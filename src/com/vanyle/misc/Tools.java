@@ -50,7 +50,6 @@ public class Tools {
 		try {
 			new Robot().mouseMove(x, y);
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -58,7 +57,6 @@ public class Tools {
 		try {
 			new Robot().mousePress(MouseEvent.BUTTON1);
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

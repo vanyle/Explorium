@@ -160,6 +160,8 @@ public class World {
 		if(worldStat != INSIDE_WORLD) {
 			ppos[worldStat] = player.p.clone(); // save current position
 			
+			player.worldSwitchCooldown = 100;
+			
 			worldStat = World.INSIDE_WORLD;
 			setGenerator(new InteriorGenerator(0l));
 			
@@ -177,6 +179,8 @@ public class World {
 	public void loadRegularWorld() {
 		if(worldStat != REGULAR_WORLD) {
 			ppos[worldStat] = player.p.clone(); // save current position
+			
+			player.worldSwitchCooldown = 30;
 			
 			worldStat = World.REGULAR_WORLD;
 			setGenerator(new ClassicGenerator(Explorium.GLOBAL_SEED));
